@@ -1,0 +1,1572 @@
+Starting training:
+without SE:
+Namespace(batch_size=4, cut_len=32000, data_dir='/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/DEMAND_16KHz', decay_epoch=12, epochs=50, init_lr=0.0005, log_interval=500, loss_weights=[0.3, 0.7, 1.0, 0.01], save_model_dir='./saved_models_log/saved_models_20250727_VoiceDEMAND_16khz')
+['NVIDIA A100-SXM4-80GB']
+====================================================================================================
+Layer (type:depth-idx)                             Output Shape              Param #
+====================================================================================================
+TSCNet                                             [1, 1, 321, 201]          --
+├─DenseEncoder: 1-1                                [1, 64, 321, 101]         --
+│    └─Sequential: 2-1                             [1, 64, 321, 201]         --
+│    │    └─Conv2d: 3-1                            [1, 64, 321, 201]         256
+│    │    └─InstanceNorm2d: 3-2                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-3                             [1, 64, 321, 201]         64
+│    └─DilatedDenseNet: 2-2                        [1, 64, 321, 201]         --
+│    │    └─ConstantPad2d: 3-4                     [1, 64, 322, 203]         --
+│    │    └─Conv2d: 3-5                            [1, 64, 321, 201]         24,640
+│    │    └─InstanceNorm2d: 3-6                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-7                             [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-8                     [1, 128, 323, 203]        --
+│    │    └─Conv2d: 3-9                            [1, 64, 321, 201]         49,216
+│    │    └─InstanceNorm2d: 3-10                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-11                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-12                    [1, 192, 325, 203]        --
+│    │    └─Conv2d: 3-13                           [1, 64, 321, 201]         73,792
+│    │    └─InstanceNorm2d: 3-14                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-15                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-16                    [1, 256, 329, 203]        --
+│    │    └─Conv2d: 3-17                           [1, 64, 321, 201]         98,368
+│    │    └─InstanceNorm2d: 3-18                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-19                            [1, 64, 321, 201]         64
+│    └─Sequential: 2-3                             [1, 64, 321, 101]         --
+│    │    └─Conv2d: 3-20                           [1, 64, 321, 101]         12,352
+│    │    └─InstanceNorm2d: 3-21                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-22                            [1, 64, 321, 101]         64
+├─TSCB: 1-2                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-4                         [101, 321, 64]            --
+│    │    └─Scale: 3-23                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-24                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-25              [101, 321, 64]            29,376
+│    │    └─Scale: 3-26                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-27                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-5                         [321, 101, 64]            --
+│    │    └─Scale: 3-28                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-29                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-30              [321, 101, 64]            29,376
+│    │    └─Scale: 3-31                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-32                        [321, 101, 64]            128
+├─TSCB: 1-3                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-6                         [101, 321, 64]            --
+│    │    └─Scale: 3-33                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-34                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-35              [101, 321, 64]            29,376
+│    │    └─Scale: 3-36                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-37                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-7                         [321, 101, 64]            --
+│    │    └─Scale: 3-38                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-39                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-40              [321, 101, 64]            29,376
+│    │    └─Scale: 3-41                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-42                        [321, 101, 64]            128
+├─TSCB: 1-4                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-8                         [101, 321, 64]            --
+│    │    └─Scale: 3-43                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-44                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-45              [101, 321, 64]            29,376
+│    │    └─Scale: 3-46                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-47                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-9                         [321, 101, 64]            --
+│    │    └─Scale: 3-48                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-49                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-50              [321, 101, 64]            29,376
+│    │    └─Scale: 3-51                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-52                        [321, 101, 64]            128
+├─TSCB: 1-5                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-10                        [101, 321, 64]            --
+│    │    └─Scale: 3-53                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-54                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-55              [101, 321, 64]            29,376
+│    │    └─Scale: 3-56                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-57                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-11                        [321, 101, 64]            --
+│    │    └─Scale: 3-58                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-59                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-60              [321, 101, 64]            29,376
+│    │    └─Scale: 3-61                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-62                        [321, 101, 64]            128
+├─MaskDecoder: 1-6                                 [1, 1, 321, 201]          --
+│    └─DilatedDenseNet: 2-12                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-63                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-64                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-65                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-66                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-67                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-68                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-69                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-70                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-71                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-72                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-73                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-74                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-75                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-76                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-77                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-78                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-13                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-79                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-80                           [1, 128, 321, 101]        24,704
+│    └─Conv2d: 2-14                                [1, 1, 321, 201]          129
+│    └─InstanceNorm2d: 2-15                        [1, 1, 321, 201]          2
+│    └─PReLU: 2-16                                 [1, 1, 321, 201]          1
+│    └─Conv2d: 2-17                                [1, 1, 321, 201]          2
+│    └─PReLU: 2-18                                 [1, 201, 321]             201
+├─ComplexDecoder: 1-7                              [1, 2, 321, 201]          --
+│    └─DilatedDenseNet: 2-19                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-81                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-82                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-83                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-84                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-85                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-86                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-87                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-88                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-89                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-90                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-91                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-92                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-93                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-94                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-95                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-96                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-20                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-97                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-98                           [1, 128, 321, 101]        24,704
+│    └─InstanceNorm2d: 2-21                        [1, 64, 321, 202]         128
+│    └─PReLU: 2-22                                 [1, 64, 321, 202]         64
+│    └─Conv2d: 2-23                                [1, 2, 321, 201]          258
+====================================================================================================
+Total params: 1,834,833
+Trainable params: 1,834,833
+Non-trainable params: 0
+Total mult-adds (G): 41.56
+====================================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 4856.40
+Params size (MB): 7.34
+Estimated Total Size (MB): 4864.25
+====================================================================================================
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+Discriminator                            [1, 1]                    --
+├─Sequential: 1-1                        [1, 1]                    --
+│    └─Conv2d: 2-1                       [1, 16, 100, 160]         512
+│    └─InstanceNorm2d: 2-2               [1, 16, 100, 160]         32
+│    └─PReLU: 2-3                        [1, 16, 100, 160]         16
+│    └─Conv2d: 2-4                       [1, 32, 50, 80]           8,192
+│    └─InstanceNorm2d: 2-5               [1, 32, 50, 80]           64
+│    └─PReLU: 2-6                        [1, 32, 50, 80]           32
+│    └─Conv2d: 2-7                       [1, 64, 25, 40]           32,768
+│    └─InstanceNorm2d: 2-8               [1, 64, 25, 40]           128
+│    └─PReLU: 2-9                        [1, 64, 25, 40]           64
+│    └─Conv2d: 2-10                      [1, 128, 12, 20]          131,072
+│    └─InstanceNorm2d: 2-11              [1, 128, 12, 20]          256
+│    └─PReLU: 2-12                       [1, 128, 12, 20]          128
+│    └─AdaptiveMaxPool2d: 2-13           [1, 128, 1, 1]            --
+│    └─Flatten: 2-14                     [1, 128]                  --
+│    └─Linear: 2-15                      [1, 64]                   8,256
+│    └─Dropout: 2-16                     [1, 64]                   --
+│    └─PReLU: 2-17                       [1, 64]                   64
+│    └─Linear: 2-18                      [1, 1]                    65
+│    └─LearnableSigmoid: 2-19            [1, 1]                    1
+==========================================================================================
+Total params: 181,650
+Trainable params: 181,650
+Non-trainable params: 0
+Total mult-adds (M): 19.67
+==========================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 11.49
+Params size (MB): 0.73
+Estimated Total Size (MB): 12.73
+==========================================================================================
+/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/CMGAN_src/data/dataloader.py:52: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. With dispatcher enabled, this function is no-op. You can remove the function call.
+  torchaudio.set_audio_backend("sox_io")         # in linux
+INFO:root:Epoch 0, Step 500, loss: 0.2539900243282318, disc_loss: 0.016509011387825012
+INFO:root:Epoch 0, Step 1000, loss: 0.34972795844078064, disc_loss: 0.012849714607000351
+INFO:root:Epoch 0, Step 1500, loss: 0.34093067049980164, disc_loss: 0.009402557276189327
+INFO:root:Epoch 0, Step 2000, loss: 0.239645317196846, disc_loss: 0.007443495560437441
+INFO:root:Epoch 0, Step 2500, loss: 0.2810008227825165, disc_loss: 0.006680204998701811
+INFO:root:Generator loss: 0.21130867627928557, Discriminator loss: 0.010656877004488335
+INFO:root:Epoch 1, Step 500, loss: 0.3773157298564911, disc_loss: 0.05772228166460991
+INFO:root:Epoch 1, Step 1000, loss: 0.2549096941947937, disc_loss: 0.0037251559551805258
+INFO:root:Epoch 1, Step 1500, loss: 0.3490365147590637, disc_loss: 0.0029891678132116795
+INFO:root:Epoch 1, Step 2000, loss: 0.285273015499115, disc_loss: 0.003381007816642523
+INFO:root:Epoch 1, Step 2500, loss: 0.33019500970840454, disc_loss: 0.004638131242245436
+INFO:root:Generator loss: 0.19087468832731247, Discriminator loss: 0.010843773679898201
+INFO:root:Epoch 2, Step 500, loss: 0.2843468189239502, disc_loss: 0.0011113849468529224
+INFO:root:Epoch 2, Step 1000, loss: 0.2095285952091217, disc_loss: 0.0039335279725492
+INFO:root:Epoch 2, Step 1500, loss: 0.23944732546806335, disc_loss: 0.0044549512676894665
+INFO:root:Epoch 2, Step 2000, loss: 0.27797731757164, disc_loss: 0.004256169777363539
+INFO:root:Epoch 2, Step 2500, loss: 0.2404162436723709, disc_loss: 0.024218251928687096
+INFO:root:Generator loss: 0.18278799701518225, Discriminator loss: 0.006499880019635261
+INFO:root:Epoch 3, Step 500, loss: 0.3114780783653259, disc_loss: 0.0014050190802663565
+INFO:root:Epoch 3, Step 1000, loss: 0.3587920665740967, disc_loss: 0.004073047544807196
+INFO:root:Epoch 3, Step 1500, loss: 0.19927944242954254, disc_loss: 0.008763542398810387
+INFO:root:Epoch 3, Step 2000, loss: 0.20180733501911163, disc_loss: 0.0026454173494130373
+INFO:root:Epoch 3, Step 2500, loss: 0.3586695194244385, disc_loss: 0.0013435014989227057
+INFO:root:Generator loss: 0.18594773001607182, Discriminator loss: 0.009778274828243155
+INFO:root:Epoch 4, Step 500, loss: 0.28387749195098877, disc_loss: 0.002350832102820277
+INFO:root:Epoch 4, Step 1000, loss: 0.16770397126674652, disc_loss: 0.004318001214414835
+INFO:root:Epoch 4, Step 1500, loss: 0.24249140918254852, disc_loss: 0.000295549223665148
+INFO:root:Epoch 4, Step 2000, loss: 0.29722994565963745, disc_loss: 0.010113758035004139
+INFO:root:Epoch 4, Step 2500, loss: 0.2297772318124771, disc_loss: 0.002042891224846244
+INFO:root:Generator loss: 0.18042034377316826, Discriminator loss: 0.007424203359459197
+INFO:root:Epoch 5, Step 500, loss: 0.22243741154670715, disc_loss: 0.010993337258696556
+INFO:root:Epoch 5, Step 1000, loss: 0.27440622448921204, disc_loss: 0.0005997202242724597
+INFO:root:Epoch 5, Step 1500, loss: 0.22768385708332062, disc_loss: 0.0015745331766083837
+INFO:root:Epoch 5, Step 2000, loss: 0.15043747425079346, disc_loss: 0.00436137430369854
+INFO:root:Epoch 5, Step 2500, loss: 0.1795552670955658, disc_loss: 0.007101648487150669
+INFO:root:Generator loss: 0.17443625712134306, Discriminator loss: 0.008248068903571727
+INFO:root:Epoch 6, Step 500, loss: 0.27926042675971985, disc_loss: 0.006399326492100954
+INFO:root:Epoch 6, Step 1000, loss: 0.22993677854537964, disc_loss: 0.0038521476089954376
+INFO:root:Epoch 6, Step 1500, loss: 0.2531612515449524, disc_loss: 0.0007900379132479429
+INFO:root:Epoch 6, Step 2000, loss: 0.325472891330719, disc_loss: 0.004907165188342333
+INFO:root:Epoch 6, Step 2500, loss: 0.2455894500017166, disc_loss: 0.005288146901875734
+INFO:root:Generator loss: 0.18074470534197334, Discriminator loss: 0.009842568492017872
+INFO:root:Epoch 7, Step 500, loss: 0.20932210981845856, disc_loss: 0.005298667121678591
+INFO:root:Epoch 7, Step 1000, loss: 0.19685067236423492, disc_loss: 0.004732707981020212
+INFO:root:Epoch 7, Step 1500, loss: 0.24747049808502197, disc_loss: 0.013555408455431461
+INFO:root:Epoch 7, Step 2000, loss: 0.26360857486724854, disc_loss: 0.0023153191432356834
+INFO:root:Epoch 7, Step 2500, loss: 0.1865542232990265, disc_loss: 0.0035074371844530106
+INFO:root:Generator loss: 0.18216195174501937, Discriminator loss: 0.0070467522506714
+INFO:root:Epoch 8, Step 500, loss: 0.21778415143489838, disc_loss: 0.005973730701953173
+INFO:root:Epoch 8, Step 1000, loss: 0.20403000712394714, disc_loss: 0.0023502870462834835
+INFO:root:Epoch 8, Step 1500, loss: 0.2504673898220062, disc_loss: 0.0006274328916333616
+INFO:root:Epoch 8, Step 2000, loss: 0.17293530702590942, disc_loss: 0.005220860708504915
+INFO:root:Epoch 8, Step 2500, loss: 0.15547345578670502, disc_loss: 0.0021570799872279167
+INFO:root:Generator loss: 0.16407250341715165, Discriminator loss: 0.007683339653419697
+INFO:root:Epoch 9, Step 500, loss: 0.1676153540611267, disc_loss: 0.004043352324515581
+INFO:root:Epoch 9, Step 1000, loss: 0.21182218194007874, disc_loss: 0.002547117182984948
+INFO:root:Epoch 9, Step 1500, loss: 0.30071958899497986, disc_loss: 0.00021042520529590547
+INFO:root:Epoch 9, Step 2000, loss: 0.23884199559688568, disc_loss: 0.0019312286749482155
+INFO:root:Epoch 9, Step 2500, loss: 0.31984373927116394, disc_loss: 0.0013526887632906437
+INFO:root:Generator loss: 0.16290793734268078, Discriminator loss: 0.006919514183765978
+INFO:root:Epoch 10, Step 500, loss: 0.26652631163597107, disc_loss: 0.0017524401191622019
+INFO:root:Epoch 10, Step 1000, loss: 0.25682011246681213, disc_loss: 0.004225869197398424
+INFO:root:Epoch 10, Step 1500, loss: 0.149869903922081, disc_loss: 0.001336285495199263
+INFO:root:Epoch 10, Step 2000, loss: 0.2023472636938095, disc_loss: 0.013615943491458893
+INFO:root:Epoch 10, Step 2500, loss: 0.1988442838191986, disc_loss: 0.0029927492141723633
+INFO:root:Generator loss: 0.17702306506847873, Discriminator loss: 0.008923690391984741
+INFO:root:Epoch 11, Step 500, loss: 0.2684847414493561, disc_loss: 0.000871150114107877
+INFO:root:Epoch 11, Step 1000, loss: 0.16537508368492126, disc_loss: 0.0017398997442796826
+INFO:root:Epoch 11, Step 1500, loss: 0.24909836053848267, disc_loss: 0.0005726811941713095
+INFO:root:Epoch 11, Step 2000, loss: 0.17388717830181122, disc_loss: 0.0027110623195767403
+INFO:root:Epoch 11, Step 2500, loss: 0.15530742704868317, disc_loss: 0.0019421781180426478
+INFO:root:Generator loss: 0.16144327106840403, Discriminator loss: 0.004076573412975034
+INFO:root:Epoch 12, Step 500, loss: 0.12436667829751968, disc_loss: 0.003044113516807556
+INFO:root:Epoch 12, Step 1000, loss: 0.20441259443759918, disc_loss: 0.0035736109130084515
+INFO:root:Epoch 12, Step 1500, loss: 0.295066237449646, disc_loss: 0.004722826182842255
+INFO:root:Epoch 12, Step 2000, loss: 0.1597331315279007, disc_loss: 0.0055032167583703995
+INFO:root:Epoch 12, Step 2500, loss: 0.23610953986644745, disc_loss: 0.0026809386909008026
+INFO:root:Generator loss: 0.16322247705702642, Discriminator loss: 0.006739741801070919
+INFO:root:Epoch 13, Step 500, loss: 0.15508726239204407, disc_loss: 0.0012690036091953516
+INFO:root:Epoch 13, Step 1000, loss: 0.19292882084846497, disc_loss: 0.0013726279139518738
+INFO:root:Epoch 13, Step 1500, loss: 0.2022683024406433, disc_loss: 0.004893770441412926
+INFO:root:Epoch 13, Step 2000, loss: 0.21633939445018768, disc_loss: 0.0008103867876343429
+INFO:root:Epoch 13, Step 2500, loss: 0.2363642454147339, disc_loss: 0.0014439483638852835
+INFO:root:Generator loss: 0.15608783594323594, Discriminator loss: 0.005212659803750355
+INFO:root:Epoch 14, Step 500, loss: 0.22451020777225494, disc_loss: 0.002160917269065976
+INFO:root:Epoch 14, Step 1000, loss: 0.22636908292770386, disc_loss: 0.0013291093055158854
+INFO:root:Epoch 14, Step 1500, loss: 0.2047542780637741, disc_loss: 0.00034196305205114186
+INFO:root:Epoch 14, Step 2000, loss: 0.16088071465492249, disc_loss: 0.00042375485645607114
+INFO:root:Epoch 14, Step 2500, loss: 0.25592178106307983, disc_loss: 0.002527596428990364
+INFO:root:Generator loss: 0.15363852650795168, Discriminator loss: 0.006790256778666076
+INFO:root:Epoch 15, Step 500, loss: 0.13867399096488953, disc_loss: 0.0032405455131083727
+INFO:root:Epoch 15, Step 1000, loss: 0.3539023697376251, disc_loss: 0.0025544236414134502
+INFO:root:Epoch 15, Step 1500, loss: 0.23290929198265076, disc_loss: 0.0013432825217023492
+INFO:root:Epoch 15, Step 2000, loss: 0.19754758477210999, disc_loss: 0.004201105330139399
+INFO:root:Epoch 15, Step 2500, loss: 0.2282480001449585, disc_loss: 0.0017051208997145295
+INFO:root:Generator loss: 0.1691854467380394, Discriminator loss: 0.013577944822315561
+INFO:root:Epoch 16, Step 500, loss: 0.21267656981945038, disc_loss: 0.003417919622734189
+INFO:root:Epoch 16, Step 1000, loss: 0.17906224727630615, disc_loss: 0.006389981135725975
+INFO:root:Epoch 16, Step 1500, loss: 0.255175918340683, disc_loss: 0.000623258063569665
+INFO:root:Epoch 16, Step 2000, loss: 0.2007381170988083, disc_loss: 0.002610210794955492
+INFO:root:Epoch 16, Step 2500, loss: 0.181208536028862, disc_loss: 0.0009238192578777671
+INFO:root:Generator loss: 0.1547196070907764, Discriminator loss: 0.00598908479101402
+INFO:root:Epoch 17, Step 500, loss: 0.22502608597278595, disc_loss: 0.0033766787964850664
+INFO:root:Epoch 17, Step 1000, loss: 0.17039676010608673, disc_loss: 0.0018114715348929167
+INFO:root:Epoch 17, Step 1500, loss: 0.21403618156909943, disc_loss: 0.030145160853862762
+INFO:root:Epoch 17, Step 2000, loss: 0.19047121703624725, disc_loss: 0.09689662605524063
+INFO:root:Epoch 17, Step 2500, loss: 0.19494180381298065, disc_loss: 0.002645233180373907
+INFO:root:Generator loss: 0.15456406482793753, Discriminator loss: 0.007065281784218437
+INFO:root:Epoch 18, Step 500, loss: 0.1914878785610199, disc_loss: 0.0005344254896044731
+INFO:root:Epoch 18, Step 1000, loss: 0.18924234807491302, disc_loss: 0.004858518950641155
+INFO:root:Epoch 18, Step 1500, loss: 0.1767333298921585, disc_loss: 0.002671490190550685
+INFO:root:Epoch 18, Step 2000, loss: 0.1933336704969406, disc_loss: 0.000392357527744025
+INFO:root:Epoch 18, Step 2500, loss: 0.21587765216827393, disc_loss: 0.0023670527152717113
+INFO:root:Generator loss: 0.1562402480941953, Discriminator loss: 0.005314558701657801
+INFO:root:Epoch 19, Step 500, loss: 0.10270246863365173, disc_loss: 0.001337680732831359
+INFO:root:Epoch 19, Step 1000, loss: 0.17577394843101501, disc_loss: 0.001324760727584362
+INFO:root:Epoch 19, Step 1500, loss: 0.09464382380247116, disc_loss: 0.0020531509071588516
+INFO:root:Epoch 19, Step 2000, loss: 0.23755694925785065, disc_loss: 0.003146146424114704
+INFO:root:Epoch 19, Step 2500, loss: 0.2131342738866806, disc_loss: 0.0002531323698349297
+INFO:root:Generator loss: 0.14961182687757085, Discriminator loss: 0.0054260109007072885
+INFO:root:Epoch 20, Step 500, loss: 0.1627310812473297, disc_loss: 0.0006740001263096929
+INFO:root:Epoch 20, Step 1000, loss: 0.1801619976758957, disc_loss: 0.0016383184120059013
+INFO:root:Epoch 20, Step 1500, loss: 0.1337946206331253, disc_loss: 0.0024039160925894976
+INFO:root:Epoch 20, Step 2000, loss: 0.18557171523571014, disc_loss: 0.001508609508164227
+INFO:root:Epoch 20, Step 2500, loss: 0.22353072464466095, disc_loss: 0.0020528424065560102
+INFO:root:Generator loss: 0.15211098561587844, Discriminator loss: 0.0066486191042943055
+INFO:root:Epoch 21, Step 500, loss: 0.1561550498008728, disc_loss: 0.0010256452951580286
+INFO:root:Epoch 21, Step 1000, loss: 0.09798744320869446, disc_loss: 0.0017269151285290718
+INFO:root:Epoch 21, Step 1500, loss: 0.19255779683589935, disc_loss: 0.0009865215979516506
+INFO:root:Epoch 21, Step 2000, loss: 0.19833871722221375, disc_loss: 0.0008057684171944857
+INFO:root:Epoch 21, Step 2500, loss: 0.1251639723777771, disc_loss: 0.002910197712481022
+INFO:root:Generator loss: 0.1533733285529521, Discriminator loss: 0.00654589195187548
+INFO:root:Epoch 22, Step 500, loss: 0.1832790970802307, disc_loss: 0.0004447311512194574
+INFO:root:Epoch 22, Step 1000, loss: 0.15805105865001678, disc_loss: 0.003519749501720071
+INFO:root:Epoch 22, Step 1500, loss: 0.16567571461200714, disc_loss: 0.0040665543638169765
+INFO:root:Epoch 22, Step 2000, loss: 0.2189081311225891, disc_loss: 0.0015729897422716022
+INFO:root:Epoch 22, Step 2500, loss: 0.1224358007311821, disc_loss: 0.001609839964658022
+INFO:root:Generator loss: 0.15446013552181928, Discriminator loss: 0.0073976655712083336
+INFO:root:Epoch 23, Step 500, loss: 0.1977166384458542, disc_loss: 0.002326374873518944
+INFO:root:Epoch 23, Step 1000, loss: 0.18434052169322968, disc_loss: 0.0017475506756454706
+INFO:root:Epoch 23, Step 1500, loss: 0.17270666360855103, disc_loss: 0.0005123951123096049
+INFO:root:Epoch 23, Step 2000, loss: 0.13393482565879822, disc_loss: 0.0010959138162434101
+INFO:root:Epoch 23, Step 2500, loss: 0.22522729635238647, disc_loss: 0.0018175560981035233
+INFO:root:Generator loss: 0.1504893203817525, Discriminator loss: 0.004034935983954093
+INFO:root:Epoch 24, Step 500, loss: 0.23868007957935333, disc_loss: 0.003054041648283601
+INFO:root:Epoch 24, Step 1000, loss: 0.14625012874603271, disc_loss: 0.0021538480650633574
+INFO:root:Epoch 24, Step 1500, loss: 0.11714009195566177, disc_loss: 0.0017286695074290037
+INFO:root:Epoch 24, Step 2000, loss: 0.1371210515499115, disc_loss: 9.391736966790631e-05
+INFO:root:Epoch 24, Step 2500, loss: 0.21862643957138062, disc_loss: 0.0012211452703922987
+INFO:root:Generator loss: 0.1543224648147532, Discriminator loss: 0.006058284888549502
+INFO:root:Epoch 25, Step 500, loss: 0.2205972522497177, disc_loss: 0.001304595498368144
+INFO:root:Epoch 25, Step 1000, loss: 0.13443535566329956, disc_loss: 0.003515414195135236
+INFO:root:Epoch 25, Step 1500, loss: 0.11705095320940018, disc_loss: 0.0011780416825786233
+INFO:root:Epoch 25, Step 2000, loss: 0.1741032749414444, disc_loss: 0.0030489065684378147
+INFO:root:Epoch 25, Step 2500, loss: 0.17567995190620422, disc_loss: 0.0026516749057918787
+INFO:root:Generator loss: 0.14876219955752196, Discriminator loss: 0.007747625385341008
+INFO:root:Epoch 26, Step 500, loss: 0.23860599100589752, disc_loss: 0.0026589802000671625
+INFO:root:Epoch 26, Step 1000, loss: 0.17723484337329865, disc_loss: 0.0014797502662986517
+INFO:root:Epoch 26, Step 1500, loss: 0.25871536135673523, disc_loss: 0.004000713117420673
+INFO:root:Epoch 26, Step 2000, loss: 0.18138626217842102, disc_loss: 0.0012888264609500766
+INFO:root:Epoch 26, Step 2500, loss: 0.13328994810581207, disc_loss: 0.0019045596709474921
+INFO:root:Generator loss: 0.14835594948923703, Discriminator loss: 0.005541146040979707
+INFO:root:Epoch 27, Step 500, loss: 0.21093688905239105, disc_loss: 0.001408578478731215
+INFO:root:Epoch 27, Step 1000, loss: 0.2512277662754059, disc_loss: 0.0018250129651278257
+INFO:root:Epoch 27, Step 1500, loss: 0.1504744291305542, disc_loss: 0.0009957494912669063
+INFO:root:Epoch 27, Step 2000, loss: 0.21705441176891327, disc_loss: 0.001692224876023829
+INFO:root:Epoch 27, Step 2500, loss: 0.22591504454612732, disc_loss: 0.002330903895199299
+INFO:root:Generator loss: 0.14573074736207434, Discriminator loss: 0.004767501835797623
+INFO:root:Epoch 28, Step 500, loss: 0.1423671841621399, disc_loss: 0.000916828925255686
+INFO:root:Epoch 28, Step 1000, loss: 0.1682707816362381, disc_loss: 0.001031573279760778
+INFO:root:Epoch 28, Step 1500, loss: 0.12815697491168976, disc_loss: 0.0003269866283517331
+INFO:root:Epoch 28, Step 2000, loss: 0.23502430319786072, disc_loss: 0.0007983022951520979
+INFO:root:Epoch 28, Step 2500, loss: 0.2308199256658554, disc_loss: 0.003194565186277032
+INFO:root:Generator loss: 0.15078365831699186, Discriminator loss: 0.004840953505027729
+INFO:root:Epoch 29, Step 500, loss: 0.20419159531593323, disc_loss: 0.0038756050635129213
+INFO:root:Epoch 29, Step 1000, loss: 0.2458215206861496, disc_loss: 0.0036924986634403467
+INFO:root:Epoch 29, Step 1500, loss: 0.14550840854644775, disc_loss: 0.002255546860396862
+INFO:root:Epoch 29, Step 2000, loss: 0.1870078295469284, disc_loss: 0.002298974432051182
+INFO:root:Epoch 29, Step 2500, loss: 0.24078863859176636, disc_loss: 0.0009832608047872782
+INFO:root:Generator loss: 0.15867546627533088, Discriminator loss: 0.007678154834103375
+INFO:root:Epoch 30, Step 500, loss: 0.2053104043006897, disc_loss: 0.0005493760108947754
+INFO:root:Epoch 30, Step 1000, loss: 0.15733090043067932, disc_loss: 0.0015164106152951717
+INFO:root:Epoch 30, Step 1500, loss: 0.2596193552017212, disc_loss: 0.0006014867103658617
+INFO:root:Epoch 30, Step 2000, loss: 0.20161613821983337, disc_loss: 0.0004737906565424055
+INFO:root:Epoch 30, Step 2500, loss: 0.17666366696357727, disc_loss: 0.002878871513530612
+INFO:root:Generator loss: 0.15398952762768106, Discriminator loss: 0.006928426997917784
+INFO:root:Epoch 31, Step 500, loss: 0.16039498150348663, disc_loss: 0.0015247586416080594
+INFO:root:Epoch 31, Step 1000, loss: 0.12219288945198059, disc_loss: 0.0007158132502809167
+INFO:root:Epoch 31, Step 1500, loss: 0.2001577615737915, disc_loss: 0.0045850262977182865
+INFO:root:Epoch 31, Step 2000, loss: 0.18288443982601166, disc_loss: 0.001216235221363604
+INFO:root:Epoch 31, Step 2500, loss: 0.21067939698696136, disc_loss: 0.005214229691773653
+INFO:root:Generator loss: 0.14734164723059506, Discriminator loss: 0.005875840710818788
+INFO:root:Epoch 32, Step 500, loss: 0.19873930513858795, disc_loss: 0.0024825583677738905
+INFO:root:Epoch 32, Step 1000, loss: 0.2008846253156662, disc_loss: 0.002807190641760826
+INFO:root:Epoch 32, Step 1500, loss: 0.17570729553699493, disc_loss: 0.000853701145388186
+INFO:root:Epoch 32, Step 2000, loss: 0.19375379383563995, disc_loss: 0.0002407366264378652
+INFO:root:Epoch 32, Step 2500, loss: 0.2079307585954666, disc_loss: 0.002379574114456773
+INFO:root:Generator loss: 0.14979809934942467, Discriminator loss: 0.0055004023032629405
+INFO:root:Epoch 33, Step 500, loss: 0.194420725107193, disc_loss: 0.0013147629797458649
+INFO:root:Epoch 33, Step 1000, loss: 0.1804276406764984, disc_loss: 0.0014467606088146567
+INFO:root:Epoch 33, Step 1500, loss: 0.25271862745285034, disc_loss: 0.0006513518746942282
+INFO:root:Epoch 33, Step 2000, loss: 0.17224055528640747, disc_loss: 0.000977961695753038
+INFO:root:Epoch 33, Step 2500, loss: 0.23143990337848663, disc_loss: 0.0003511914110276848
+INFO:root:Generator loss: 0.15089622508842968, Discriminator loss: 0.004730126810756295
+INFO:root:Epoch 34, Step 500, loss: 0.21917758882045746, disc_loss: 0.0010931040160357952
+INFO:root:Epoch 34, Step 1000, loss: 0.17301994562149048, disc_loss: 0.0010714357485994697
+INFO:root:Epoch 34, Step 1500, loss: 0.15516549348831177, disc_loss: 0.0027220728807151318
+INFO:root:Epoch 34, Step 2000, loss: 0.22751787304878235, disc_loss: 0.0011615353869274259
+INFO:root:Epoch 34, Step 2500, loss: 0.15649442374706268, disc_loss: 0.00042968933121301234
+INFO:root:Generator loss: 0.14627283666897745, Discriminator loss: 0.0047090371897036114
+INFO:root:Epoch 35, Step 500, loss: 0.16293732821941376, disc_loss: 0.0008607660420238972
+INFO:root:Epoch 35, Step 1000, loss: 0.17749029397964478, disc_loss: 0.0010763001628220081
+INFO:root:Epoch 35, Step 1500, loss: 0.18890205025672913, disc_loss: 0.0005442379624582827
+INFO:root:Epoch 35, Step 2000, loss: 0.19972632825374603, disc_loss: 0.0033181090839207172
+INFO:root:Epoch 35, Step 2500, loss: 0.16187238693237305, disc_loss: 0.001018134644255042
+INFO:root:Generator loss: 0.14984043669498082, Discriminator loss: 0.006209380111171925
+INFO:root:Epoch 36, Step 500, loss: 0.1513613909482956, disc_loss: 0.0018746776040643454
+INFO:root:Epoch 36, Step 1000, loss: 0.20764899253845215, disc_loss: 0.002261020243167877
+INFO:root:Epoch 36, Step 1500, loss: 0.1768537014722824, disc_loss: 0.0033250937703996897
+INFO:root:Epoch 36, Step 2000, loss: 0.14669767022132874, disc_loss: 0.0011061959667131305
+INFO:root:Epoch 36, Step 2500, loss: 0.2135147601366043, disc_loss: 0.00019585709378588945
+INFO:root:Generator loss: 0.1486283911084666, Discriminator loss: 0.004022565062239187
+INFO:root:Epoch 37, Step 500, loss: 0.1905195564031601, disc_loss: 0.0009264898835681379
+INFO:root:Epoch 37, Step 1000, loss: 0.18412727117538452, disc_loss: 0.0026822208892554045
+INFO:root:Epoch 37, Step 1500, loss: 0.16073676943778992, disc_loss: 0.0008899829699657857
+INFO:root:Epoch 37, Step 2000, loss: 0.20976361632347107, disc_loss: 0.002062165876850486
+INFO:root:Epoch 37, Step 2500, loss: 0.24055610597133636, disc_loss: 0.0002933079667855054
+INFO:root:Generator loss: 0.14657772390298474, Discriminator loss: 0.005014802716810593
+INFO:root:Epoch 38, Step 500, loss: 0.25276151299476624, disc_loss: 0.0004531370068434626
+INFO:root:Epoch 38, Step 1000, loss: 0.1588149070739746, disc_loss: 0.0016231059562414885
+INFO:root:Epoch 38, Step 1500, loss: 0.14993900060653687, disc_loss: 0.0034180269576609135
+INFO:root:Epoch 38, Step 2000, loss: 0.14262405037879944, disc_loss: 0.003275749972090125
+INFO:root:Epoch 38, Step 2500, loss: 0.27539026737213135, disc_loss: 0.0020030424930155277
+INFO:root:Generator loss: 0.14946835303624856, Discriminator loss: 0.005895402947520143
+INFO:root:Epoch 39, Step 500, loss: 0.17928197979927063, disc_loss: 0.0014497990487143397
+INFO:root:Epoch 39, Step 1000, loss: 0.18940681219100952, disc_loss: 0.0014012884348630905
+INFO:root:Epoch 39, Step 1500, loss: 0.19437220692634583, disc_loss: 0.00013676294474862516
+INFO:root:Epoch 39, Step 2000, loss: 0.1741429567337036, disc_loss: 0.0004778603033628315
+INFO:root:Epoch 39, Step 2500, loss: 0.16654321551322937, disc_loss: 0.0015768136363476515
+INFO:root:Generator loss: 0.14818840857269694, Discriminator loss: 0.007327816879941327
+INFO:root:Epoch 40, Step 500, loss: 0.195087730884552, disc_loss: 0.0024869043845683336
+INFO:root:Epoch 40, Step 1000, loss: 0.16054658591747284, disc_loss: 0.0011264239437878132
+INFO:root:Epoch 40, Step 1500, loss: 0.20826035737991333, disc_loss: 0.0017592401709407568
+INFO:root:Epoch 40, Step 2000, loss: 0.22173400223255157, disc_loss: 0.0007344527402892709
+INFO:root:Epoch 40, Step 2500, loss: 0.18228641152381897, disc_loss: 0.0011047192383557558
+INFO:root:Generator loss: 0.1489931129063796, Discriminator loss: 0.005845360889015335
+INFO:root:Epoch 41, Step 500, loss: 0.15993541479110718, disc_loss: 0.009076358750462532
+INFO:root:Epoch 41, Step 1000, loss: 0.13082584738731384, disc_loss: 0.0013673340436071157
+INFO:root:Epoch 41, Step 1500, loss: 0.20745448768138885, disc_loss: 0.0015069707296788692
+INFO:root:Epoch 41, Step 2000, loss: 0.19766588509082794, disc_loss: 0.0011982448631897569
+INFO:root:Epoch 41, Step 2500, loss: 0.14863663911819458, disc_loss: 0.00033444937434978783
+INFO:root:Generator loss: 0.14856014614111013, Discriminator loss: 0.005174874998877747
+INFO:root:Epoch 42, Step 500, loss: 0.2058960646390915, disc_loss: 0.0008804156095720828
+INFO:root:Epoch 42, Step 1000, loss: 0.21253572404384613, disc_loss: 0.0001839420001488179
+INFO:root:Epoch 42, Step 1500, loss: 0.23401705920696259, disc_loss: 0.0007566087879240513
+INFO:root:Epoch 42, Step 2000, loss: 0.20455804467201233, disc_loss: 0.0003084954514633864
+INFO:root:Epoch 42, Step 2500, loss: 0.1954154074192047, disc_loss: 0.001600530929863453
+INFO:root:Generator loss: 0.15215691189887454, Discriminator loss: 0.005805769248908494
+INFO:root:Epoch 43, Step 500, loss: 0.19598238170146942, disc_loss: 0.002962893107905984
+INFO:root:Epoch 43, Step 1000, loss: 0.19854143261909485, disc_loss: 0.0005390091682784259
+INFO:root:Epoch 43, Step 1500, loss: 0.1879274845123291, disc_loss: 0.0002737304021138698
+INFO:root:Epoch 43, Step 2000, loss: 0.17904366552829742, disc_loss: 0.00040350781637243927
+INFO:root:Epoch 43, Step 2500, loss: 0.17874695360660553, disc_loss: 0.0011101565323770046
+INFO:root:Generator loss: 0.14885109167509866, Discriminator loss: 0.006487108063207345
+INFO:root:Epoch 44, Step 500, loss: 0.1351771503686905, disc_loss: 9.704804688226432e-05
+INFO:root:Epoch 44, Step 1000, loss: 0.16539306938648224, disc_loss: 0.0007086216355673969
+INFO:root:Epoch 44, Step 1500, loss: 0.1302650272846222, disc_loss: 0.0025903319474309683
+INFO:root:Epoch 44, Step 2000, loss: 0.14535202085971832, disc_loss: 0.0006764901336282492
+INFO:root:Epoch 44, Step 2500, loss: 0.16291268169879913, disc_loss: 0.00045565710752271116
+INFO:root:Generator loss: 0.1463214369147148, Discriminator loss: 0.005287576292882203
+INFO:root:Epoch 45, Step 500, loss: 0.2508254647254944, disc_loss: 0.001957090338692069
+INFO:root:Epoch 45, Step 1000, loss: 0.23730552196502686, disc_loss: 0.0004403247148729861
+INFO:root:Epoch 45, Step 1500, loss: 0.14702081680297852, disc_loss: 0.0005329344421625137
+INFO:root:Epoch 45, Step 2000, loss: 0.18926963210105896, disc_loss: 0.000293280667392537
+INFO:root:Epoch 45, Step 2500, loss: 0.12348830699920654, disc_loss: 0.0015010752249509096
+INFO:root:Generator loss: 0.15007459860548233, Discriminator loss: 0.0072431369145721245
+INFO:root:Epoch 46, Step 500, loss: 0.17445912957191467, disc_loss: 0.0004647710593417287
+INFO:root:Epoch 46, Step 1000, loss: 0.20534275472164154, disc_loss: 0.0013181299436837435
+INFO:root:Epoch 46, Step 1500, loss: 0.2276194840669632, disc_loss: 0.000758007459808141
+INFO:root:Epoch 46, Step 2000, loss: 0.2495671659708023, disc_loss: 0.0017866156995296478
+INFO:root:Epoch 46, Step 2500, loss: 0.18355131149291992, disc_loss: 0.0018321237294003367
+INFO:root:Generator loss: 0.1499947901562001, Discriminator loss: 0.004823166144172858
+INFO:root:Epoch 47, Step 500, loss: 0.19020941853523254, disc_loss: 0.0008874675258994102
+INFO:root:Epoch 47, Step 1000, loss: 0.14401493966579437, disc_loss: 0.001428199466317892
+INFO:root:Epoch 47, Step 1500, loss: 0.17279602587223053, disc_loss: 0.00391447963193059
+INFO:root:Epoch 47, Step 2000, loss: 0.21809335052967072, disc_loss: 0.0011273304698988795
+INFO:root:Epoch 47, Step 2500, loss: 0.16547349095344543, disc_loss: 0.0012368591269478202
+INFO:root:Generator loss: 0.14667650059010218, Discriminator loss: 0.004892330235890361
+INFO:root:Epoch 48, Step 500, loss: 0.17260520160198212, disc_loss: 0.0002630127710290253
+INFO:root:Epoch 48, Step 1000, loss: 0.1777084618806839, disc_loss: 0.0015179982874542475
+INFO:root:Epoch 48, Step 1500, loss: 0.1744341254234314, disc_loss: 0.00010676485544536263
+INFO:root:Epoch 48, Step 2000, loss: 0.20932506024837494, disc_loss: 4.466766040422954e-05
+INFO:root:Epoch 48, Step 2500, loss: 0.2565150260925293, disc_loss: 0.0013671359047293663
+INFO:root:Generator loss: 0.14939765527265744, Discriminator loss: 0.006522138973893553
+INFO:root:Epoch 49, Step 500, loss: 0.2376515418291092, disc_loss: 0.001964905299246311
+INFO:root:Epoch 49, Step 1000, loss: 0.14196287095546722, disc_loss: 0.02654794044792652
+INFO:root:Epoch 49, Step 1500, loss: 0.2045765370130539, disc_loss: 0.0005215786513872445
+INFO:root:Epoch 49, Step 2000, loss: 0.1774953454732895, disc_loss: 0.0021921517327427864
+INFO:root:Epoch 49, Step 2500, loss: 0.191289022564888, disc_loss: 0.0016558493953198195
+INFO:root:Generator loss: 0.14960534176201495, Discriminator loss: 0.006123453921972417
+Training finished.
+Starting training:
+without SE:
+Namespace(batch_size=4, cut_len=32000, data_dir='/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/DEMAND_16KHz', decay_epoch=12, epochs=50, init_lr=0.0005, log_interval=500, loss_weights=[0.1, 0.9, 0.2, 0.05], save_model_dir='./saved_models_log/saved_models_20250728_VoiceDEMAND_16khz')
+['NVIDIA A100-SXM4-80GB']
+====================================================================================================
+Layer (type:depth-idx)                             Output Shape              Param #
+====================================================================================================
+TSCNet                                             [1, 1, 321, 201]          --
+├─DenseEncoder: 1-1                                [1, 64, 321, 101]         --
+│    └─Sequential: 2-1                             [1, 64, 321, 201]         --
+│    │    └─Conv2d: 3-1                            [1, 64, 321, 201]         256
+│    │    └─InstanceNorm2d: 3-2                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-3                             [1, 64, 321, 201]         64
+│    └─DilatedDenseNet: 2-2                        [1, 64, 321, 201]         --
+│    │    └─ConstantPad2d: 3-4                     [1, 64, 322, 203]         --
+│    │    └─Conv2d: 3-5                            [1, 64, 321, 201]         24,640
+│    │    └─InstanceNorm2d: 3-6                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-7                             [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-8                     [1, 128, 323, 203]        --
+│    │    └─Conv2d: 3-9                            [1, 64, 321, 201]         49,216
+│    │    └─InstanceNorm2d: 3-10                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-11                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-12                    [1, 192, 325, 203]        --
+│    │    └─Conv2d: 3-13                           [1, 64, 321, 201]         73,792
+│    │    └─InstanceNorm2d: 3-14                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-15                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-16                    [1, 256, 329, 203]        --
+│    │    └─Conv2d: 3-17                           [1, 64, 321, 201]         98,368
+│    │    └─InstanceNorm2d: 3-18                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-19                            [1, 64, 321, 201]         64
+│    └─Sequential: 2-3                             [1, 64, 321, 101]         --
+│    │    └─Conv2d: 3-20                           [1, 64, 321, 101]         12,352
+│    │    └─InstanceNorm2d: 3-21                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-22                            [1, 64, 321, 101]         64
+├─TSCB: 1-2                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-4                         [101, 321, 64]            --
+│    │    └─Scale: 3-23                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-24                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-25              [101, 321, 64]            29,376
+│    │    └─Scale: 3-26                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-27                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-5                         [321, 101, 64]            --
+│    │    └─Scale: 3-28                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-29                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-30              [321, 101, 64]            29,376
+│    │    └─Scale: 3-31                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-32                        [321, 101, 64]            128
+├─TSCB: 1-3                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-6                         [101, 321, 64]            --
+│    │    └─Scale: 3-33                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-34                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-35              [101, 321, 64]            29,376
+│    │    └─Scale: 3-36                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-37                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-7                         [321, 101, 64]            --
+│    │    └─Scale: 3-38                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-39                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-40              [321, 101, 64]            29,376
+│    │    └─Scale: 3-41                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-42                        [321, 101, 64]            128
+├─TSCB: 1-4                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-8                         [101, 321, 64]            --
+│    │    └─Scale: 3-43                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-44                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-45              [101, 321, 64]            29,376
+│    │    └─Scale: 3-46                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-47                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-9                         [321, 101, 64]            --
+│    │    └─Scale: 3-48                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-49                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-50              [321, 101, 64]            29,376
+│    │    └─Scale: 3-51                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-52                        [321, 101, 64]            128
+├─TSCB: 1-5                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-10                        [101, 321, 64]            --
+│    │    └─Scale: 3-53                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-54                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-55              [101, 321, 64]            29,376
+│    │    └─Scale: 3-56                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-57                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-11                        [321, 101, 64]            --
+│    │    └─Scale: 3-58                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-59                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-60              [321, 101, 64]            29,376
+│    │    └─Scale: 3-61                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-62                        [321, 101, 64]            128
+├─MaskDecoder: 1-6                                 [1, 1, 321, 201]          --
+│    └─DilatedDenseNet: 2-12                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-63                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-64                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-65                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-66                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-67                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-68                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-69                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-70                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-71                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-72                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-73                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-74                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-75                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-76                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-77                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-78                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-13                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-79                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-80                           [1, 128, 321, 101]        24,704
+│    └─Conv2d: 2-14                                [1, 1, 321, 201]          129
+│    └─InstanceNorm2d: 2-15                        [1, 1, 321, 201]          2
+│    └─PReLU: 2-16                                 [1, 1, 321, 201]          1
+│    └─Conv2d: 2-17                                [1, 1, 321, 201]          2
+│    └─PReLU: 2-18                                 [1, 201, 321]             201
+├─ComplexDecoder: 1-7                              [1, 2, 321, 201]          --
+│    └─DilatedDenseNet: 2-19                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-81                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-82                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-83                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-84                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-85                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-86                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-87                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-88                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-89                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-90                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-91                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-92                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-93                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-94                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-95                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-96                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-20                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-97                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-98                           [1, 128, 321, 101]        24,704
+│    └─InstanceNorm2d: 2-21                        [1, 64, 321, 202]         128
+│    └─PReLU: 2-22                                 [1, 64, 321, 202]         64
+│    └─Conv2d: 2-23                                [1, 2, 321, 201]          258
+====================================================================================================
+Total params: 1,834,833
+Trainable params: 1,834,833
+Non-trainable params: 0
+Total mult-adds (G): 41.56
+====================================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 4856.40
+Params size (MB): 7.34
+Estimated Total Size (MB): 4864.25
+====================================================================================================
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+Discriminator                            [1, 1]                    --
+├─Sequential: 1-1                        [1, 1]                    --
+│    └─Conv2d: 2-1                       [1, 16, 100, 160]         512
+│    └─InstanceNorm2d: 2-2               [1, 16, 100, 160]         32
+│    └─PReLU: 2-3                        [1, 16, 100, 160]         16
+│    └─Conv2d: 2-4                       [1, 32, 50, 80]           8,192
+│    └─InstanceNorm2d: 2-5               [1, 32, 50, 80]           64
+│    └─PReLU: 2-6                        [1, 32, 50, 80]           32
+│    └─Conv2d: 2-7                       [1, 64, 25, 40]           32,768
+│    └─InstanceNorm2d: 2-8               [1, 64, 25, 40]           128
+│    └─PReLU: 2-9                        [1, 64, 25, 40]           64
+│    └─Conv2d: 2-10                      [1, 128, 12, 20]          131,072
+│    └─InstanceNorm2d: 2-11              [1, 128, 12, 20]          256
+│    └─PReLU: 2-12                       [1, 128, 12, 20]          128
+│    └─AdaptiveMaxPool2d: 2-13           [1, 128, 1, 1]            --
+│    └─Flatten: 2-14                     [1, 128]                  --
+│    └─Linear: 2-15                      [1, 64]                   8,256
+│    └─Dropout: 2-16                     [1, 64]                   --
+│    └─PReLU: 2-17                       [1, 64]                   64
+│    └─Linear: 2-18                      [1, 1]                    65
+│    └─LearnableSigmoid: 2-19            [1, 1]                    1
+==========================================================================================
+Total params: 181,650
+Trainable params: 181,650
+Non-trainable params: 0
+Total mult-adds (M): 19.67
+==========================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 11.49
+Params size (MB): 0.73
+Estimated Total Size (MB): 12.73
+==========================================================================================
+/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/CMGAN_src/data/dataloader.py:52: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. With dispatcher enabled, this function is no-op. You can remove the function call.
+  torchaudio.set_audio_backend("sox_io")         # in linux
+INFO:root:Epoch 0, Step 500, loss: 0.14392943680286407, disc_loss: 0.025441601872444153
+INFO:root:Epoch 0, Step 1000, loss: 0.1264440268278122, disc_loss: 0.008166695944964886
+INFO:root:Epoch 0, Step 1500, loss: 0.11563518643379211, disc_loss: 0.014736620709300041
+INFO:root:Epoch 0, Step 2000, loss: 0.10644389688968658, disc_loss: 0.004257369786500931
+INFO:root:Epoch 0, Step 2500, loss: 0.1321423053741455, disc_loss: 0.0058531383983790874
+INFO:root:Generator loss: 0.0888762948944152, Discriminator loss: 0.0078088752986146676
+INFO:root:Epoch 1, Step 500, loss: 0.0963893011212349, disc_loss: 0.001723649213090539
+INFO:root:Epoch 1, Step 1000, loss: 0.10920333117246628, disc_loss: 0.008418770506978035
+INFO:root:Epoch 1, Step 1500, loss: 0.13742642104625702, disc_loss: 0.0023629264906048775
+INFO:root:Epoch 1, Step 2000, loss: 0.08737500011920929, disc_loss: 0.0069679757580161095
+INFO:root:Epoch 1, Step 2500, loss: 0.07500484585762024, disc_loss: 0.005152784287929535
+INFO:root:Generator loss: 0.07758390046294453, Discriminator loss: 0.0043654375287799675
+INFO:root:Epoch 2, Step 500, loss: 0.1094670444726944, disc_loss: 0.004168637562543154
+INFO:root:Epoch 2, Step 1000, loss: 0.1056501492857933, disc_loss: 0.0058429427444934845
+INFO:root:Epoch 2, Step 1500, loss: 0.06645677983760834, disc_loss: 0.021104924380779266
+INFO:root:Epoch 2, Step 2000, loss: 0.1471216082572937, disc_loss: 0.0032143183052539825
+INFO:root:Epoch 2, Step 2500, loss: 0.11027326434850693, disc_loss: 0.0022176187485456467
+INFO:root:Generator loss: 0.07486800241817548, Discriminator loss: 0.013515947513209963
+INFO:root:Epoch 3, Step 500, loss: 0.11300020664930344, disc_loss: 0.0018103402107954025
+INFO:root:Epoch 3, Step 1000, loss: 0.15395645797252655, disc_loss: 0.007175195496529341
+INFO:root:Epoch 3, Step 1500, loss: 0.11545264720916748, disc_loss: 0.007704508490860462
+INFO:root:Epoch 3, Step 2000, loss: 0.08894342929124832, disc_loss: 0.008722982369363308
+INFO:root:Epoch 3, Step 2500, loss: 0.07724820077419281, disc_loss: 0.005018217489123344
+INFO:root:Generator loss: 0.0736723935358154, Discriminator loss: 0.007137701984973019
+INFO:root:Epoch 4, Step 500, loss: 0.09552668035030365, disc_loss: 0.0006124433130025864
+INFO:root:Epoch 4, Step 1000, loss: 0.07401945441961288, disc_loss: 0.004592387471348047
+INFO:root:Epoch 4, Step 1500, loss: 0.12549945712089539, disc_loss: 0.014528658241033554
+INFO:root:Epoch 4, Step 2000, loss: 0.09339211136102676, disc_loss: 0.00734633207321167
+INFO:root:Epoch 4, Step 2500, loss: 0.11793291568756104, disc_loss: 0.0013238569954410195
+INFO:root:Generator loss: 0.07103987224400043, Discriminator loss: 0.005011185221201672
+INFO:root:Epoch 5, Step 500, loss: 0.057494573295116425, disc_loss: 0.011469006538391113
+INFO:root:Epoch 5, Step 1000, loss: 0.08254855126142502, disc_loss: 0.008650739677250385
+INFO:root:Epoch 5, Step 1500, loss: 0.11976218223571777, disc_loss: 0.0019361997256055474
+INFO:root:Epoch 5, Step 2000, loss: 0.13964489102363586, disc_loss: 0.004732907749712467
+INFO:root:Epoch 5, Step 2500, loss: 0.08037083595991135, disc_loss: 0.003196332138031721
+INFO:root:Generator loss: 0.06911357515717595, Discriminator loss: 0.005364961023482006
+INFO:root:Epoch 6, Step 500, loss: 0.10501332581043243, disc_loss: 0.005120501387864351
+INFO:root:Epoch 6, Step 1000, loss: 0.055431291460990906, disc_loss: 0.0032032285816967487
+INFO:root:Epoch 6, Step 1500, loss: 0.05953878536820412, disc_loss: 0.004076643381267786
+INFO:root:Epoch 6, Step 2000, loss: 0.09324169903993607, disc_loss: 0.0023489228915423155
+INFO:root:Epoch 6, Step 2500, loss: 0.0937739685177803, disc_loss: 0.004561207722872496
+INFO:root:Generator loss: 0.06914323038484865, Discriminator loss: 0.006054933409226914
+INFO:root:Epoch 7, Step 500, loss: 0.10389459133148193, disc_loss: 0.001104495138861239
+INFO:root:Epoch 7, Step 1000, loss: 0.11228398233652115, disc_loss: 0.001525385770946741
+INFO:root:Epoch 7, Step 1500, loss: 0.06301725655794144, disc_loss: 0.0009650451247580349
+INFO:root:Epoch 7, Step 2000, loss: 0.10100512951612473, disc_loss: 0.007885388098657131
+INFO:root:Epoch 7, Step 2500, loss: 0.08173037320375443, disc_loss: 0.0026610149070620537
+INFO:root:Generator loss: 0.06798635496423372, Discriminator loss: 0.00488463660849889
+INFO:root:Epoch 8, Step 500, loss: 0.1287597119808197, disc_loss: 0.00405817711725831
+INFO:root:Epoch 8, Step 1000, loss: 0.07679784297943115, disc_loss: 0.000780606409534812
+INFO:root:Epoch 8, Step 1500, loss: 0.07660335302352905, disc_loss: 0.0012257901253178716
+INFO:root:Epoch 8, Step 2000, loss: 0.05015035718679428, disc_loss: 0.0010304426541551948
+INFO:root:Epoch 8, Step 2500, loss: 0.10625506937503815, disc_loss: 0.004586952272802591
+INFO:root:Generator loss: 0.06658363702155433, Discriminator loss: 0.006003912797328243
+INFO:root:Epoch 9, Step 500, loss: 0.0902351513504982, disc_loss: 0.003382190130650997
+INFO:root:Epoch 9, Step 1000, loss: 0.10317893326282501, disc_loss: 0.0004728125059045851
+INFO:root:Epoch 9, Step 1500, loss: 0.13671796023845673, disc_loss: 0.0038859634660184383
+INFO:root:Epoch 9, Step 2000, loss: 0.10197310149669647, disc_loss: 0.0007999834488146007
+INFO:root:Epoch 9, Step 2500, loss: 0.0837150365114212, disc_loss: 0.0029866299591958523
+INFO:root:Generator loss: 0.06392249283245177, Discriminator loss: 0.0043762523438770195
+INFO:root:Epoch 10, Step 500, loss: 0.07124682515859604, disc_loss: 0.004552082624286413
+INFO:root:Epoch 10, Step 1000, loss: 0.059762511402368546, disc_loss: 0.0048569487407803535
+INFO:root:Epoch 10, Step 1500, loss: 0.11149616539478302, disc_loss: 0.002256016479805112
+INFO:root:Epoch 10, Step 2000, loss: 0.0800679624080658, disc_loss: 0.005563040263950825
+INFO:root:Epoch 10, Step 2500, loss: 0.10185980796813965, disc_loss: 0.0030882142018526793
+INFO:root:Generator loss: 0.06294989590397448, Discriminator loss: 0.006200826224530211
+INFO:root:Epoch 11, Step 500, loss: 0.10088425874710083, disc_loss: 0.0012753340415656567
+INFO:root:Epoch 11, Step 1000, loss: 0.08605792373418808, disc_loss: 0.0047097899951040745
+INFO:root:Epoch 11, Step 1500, loss: 0.09942314773797989, disc_loss: 0.00150384777225554
+INFO:root:Epoch 11, Step 2000, loss: 0.053868021816015244, disc_loss: 0.0006634937017224729
+INFO:root:Epoch 11, Step 2500, loss: 0.08373021334409714, disc_loss: 0.007138246204704046
+INFO:root:Generator loss: 0.06200270908116137, Discriminator loss: 0.004366930536880583
+INFO:root:Epoch 12, Step 500, loss: 0.07000958919525146, disc_loss: 0.0022659425158053637
+INFO:root:Epoch 12, Step 1000, loss: 0.1064484640955925, disc_loss: 0.00039239536272361875
+INFO:root:Epoch 12, Step 1500, loss: 0.09696396440267563, disc_loss: 0.0005417029024101794
+INFO:root:Epoch 12, Step 2000, loss: 0.0883823111653328, disc_loss: 0.0005792125011794269
+INFO:root:Epoch 12, Step 2500, loss: 0.07011847198009491, disc_loss: 0.0005917557864449918
+INFO:root:Generator loss: 0.05933100467059508, Discriminator loss: 0.003160060990533398
+INFO:root:Epoch 13, Step 500, loss: 0.0560653991997242, disc_loss: 0.00307059264741838
+INFO:root:Epoch 13, Step 1000, loss: 0.1207917258143425, disc_loss: 0.0005072979256510735
+INFO:root:Epoch 13, Step 1500, loss: 0.0749482735991478, disc_loss: 0.0015201314818114042
+INFO:root:Epoch 13, Step 2000, loss: 0.06606337428092957, disc_loss: 0.0009802764980122447
+INFO:root:Epoch 13, Step 2500, loss: 0.10931283980607986, disc_loss: 0.0014232784742489457
+INFO:root:Generator loss: 0.06118075300044226, Discriminator loss: 0.004393820319042453
+INFO:root:Epoch 14, Step 500, loss: 0.1118740513920784, disc_loss: 0.001259793876670301
+INFO:root:Epoch 14, Step 1000, loss: 0.10591757297515869, disc_loss: 0.000302951957564801
+INFO:root:Epoch 14, Step 1500, loss: 0.07601827383041382, disc_loss: 0.00023893821344245225
+INFO:root:Epoch 14, Step 2000, loss: 0.1040729507803917, disc_loss: 0.0012624763185158372
+INFO:root:Epoch 14, Step 2500, loss: 0.06070816144347191, disc_loss: 0.0023002028465270996
+INFO:root:Generator loss: 0.060975003137605864, Discriminator loss: 0.0051771914301744154
+INFO:root:Epoch 15, Step 500, loss: 0.10992444306612015, disc_loss: 0.0018317875219509006
+INFO:root:Epoch 15, Step 1000, loss: 0.07090100646018982, disc_loss: 0.0031604429241269827
+INFO:root:Epoch 15, Step 1500, loss: 0.08809896558523178, disc_loss: 0.0007512015872634947
+INFO:root:Epoch 15, Step 2000, loss: 0.10477603226900101, disc_loss: 0.0012679235078394413
+INFO:root:Epoch 15, Step 2500, loss: 0.10261210054159164, disc_loss: 0.0024332564789801836
+INFO:root:Generator loss: 0.06359117800026264, Discriminator loss: 0.00754873956103235
+INFO:root:Epoch 16, Step 500, loss: 0.06831597536802292, disc_loss: 0.001474160817451775
+INFO:root:Epoch 16, Step 1000, loss: 0.09615805000066757, disc_loss: 0.0031647796276956797
+INFO:root:Epoch 16, Step 1500, loss: 0.12392294406890869, disc_loss: 0.0019517475739121437
+INFO:root:Epoch 16, Step 2000, loss: 0.0715765506029129, disc_loss: 0.005785053130239248
+INFO:root:Epoch 16, Step 2500, loss: 0.1487339437007904, disc_loss: 0.0006268387078307569
+INFO:root:Generator loss: 0.061079035440767274, Discriminator loss: 0.005615078210627244
+INFO:root:Epoch 17, Step 500, loss: 0.049235716462135315, disc_loss: 0.0016255519585683942
+INFO:root:Epoch 17, Step 1000, loss: 0.09261832386255264, disc_loss: 0.001789127360098064
+INFO:root:Epoch 17, Step 1500, loss: 0.058171335607767105, disc_loss: 0.001119993394240737
+INFO:root:Epoch 17, Step 2000, loss: 0.12312179058790207, disc_loss: 0.0032854347955435514
+INFO:root:Epoch 17, Step 2500, loss: 0.09034760296344757, disc_loss: 0.0010736871045082808
+INFO:root:Generator loss: 0.05888470012730765, Discriminator loss: 0.004716434122404554
+INFO:root:Epoch 18, Step 500, loss: 0.06851978600025177, disc_loss: 0.0015731981256976724
+INFO:root:Epoch 18, Step 1000, loss: 0.07832454890012741, disc_loss: 0.0004490178544074297
+INFO:root:Epoch 18, Step 1500, loss: 0.07865764200687408, disc_loss: 0.0012013391824439168
+INFO:root:Epoch 18, Step 2000, loss: 0.08591210842132568, disc_loss: 0.0005441831308417022
+INFO:root:Epoch 18, Step 2500, loss: 0.0948244258761406, disc_loss: 0.0002979983692057431
+INFO:root:Generator loss: 0.060287581738627076, Discriminator loss: 0.00526239495715327
+INFO:root:Epoch 19, Step 500, loss: 0.05903534218668938, disc_loss: 0.004437518306076527
+INFO:root:Epoch 19, Step 1000, loss: 0.08104173839092255, disc_loss: 0.001598983770236373
+INFO:root:Epoch 19, Step 1500, loss: 0.08303741365671158, disc_loss: 0.0008327164687216282
+INFO:root:Epoch 19, Step 2000, loss: 0.08178595453500748, disc_loss: 0.0011504339054226875
+INFO:root:Epoch 19, Step 2500, loss: 0.06589038670063019, disc_loss: 0.00014454325719270855
+INFO:root:Generator loss: 0.060259988441050634, Discriminator loss: 0.0070790550118050586
+INFO:root:Epoch 20, Step 500, loss: 0.09947559237480164, disc_loss: 0.0008221564930863678
+INFO:root:Epoch 20, Step 1000, loss: 0.0618465319275856, disc_loss: 0.004302013199776411
+INFO:root:Epoch 20, Step 1500, loss: 0.09083747118711472, disc_loss: 0.00448246905580163
+INFO:root:Epoch 20, Step 2000, loss: 0.09156972169876099, disc_loss: 0.0007961117080412805
+INFO:root:Epoch 20, Step 2500, loss: 0.06955921649932861, disc_loss: 0.005637279246002436
+INFO:root:Generator loss: 0.05871185329426261, Discriminator loss: 0.0070435690350386364
+INFO:root:Epoch 21, Step 500, loss: 0.05302035063505173, disc_loss: 0.002371028298512101
+INFO:root:Epoch 21, Step 1000, loss: 0.0766027569770813, disc_loss: 0.0009707680437713861
+INFO:root:Epoch 21, Step 1500, loss: 0.08035124838352203, disc_loss: 0.001993427751585841
+INFO:root:Epoch 21, Step 2000, loss: 0.0872245579957962, disc_loss: 0.003965582232922316
+INFO:root:Epoch 21, Step 2500, loss: 0.06646749377250671, disc_loss: 0.001361966016702354
+INFO:root:Generator loss: 0.06011908627974177, Discriminator loss: 0.0043250411344364055
+INFO:root:Epoch 22, Step 500, loss: 0.06129195913672447, disc_loss: 0.0018830177141353488
+INFO:root:Epoch 22, Step 1000, loss: 0.11480935662984848, disc_loss: 0.0005165820475667715
+INFO:root:Epoch 22, Step 1500, loss: 0.0974775180220604, disc_loss: 0.0013345517218112946
+INFO:root:Epoch 22, Step 2000, loss: 0.12067963182926178, disc_loss: 0.003008452709764242
+INFO:root:Epoch 22, Step 2500, loss: 0.06558426469564438, disc_loss: 0.002968315966427326
+INFO:root:Generator loss: 0.05853868555277586, Discriminator loss: 0.005555835510138211
+INFO:root:Epoch 23, Step 500, loss: 0.12048406898975372, disc_loss: 0.0022804797627031803
+INFO:root:Epoch 23, Step 1000, loss: 0.10245765000581741, disc_loss: 0.0027151743415743113
+INFO:root:Epoch 23, Step 1500, loss: 0.12598221004009247, disc_loss: 0.002390514360740781
+INFO:root:Epoch 23, Step 2000, loss: 0.0833280012011528, disc_loss: 0.0020858345087617636
+INFO:root:Epoch 23, Step 2500, loss: 0.08735974133014679, disc_loss: 0.002403385704383254
+INFO:root:Generator loss: 0.059769909928362924, Discriminator loss: 0.003561287142501102
+INFO:root:Epoch 24, Step 500, loss: 0.07799743860960007, disc_loss: 0.001731236232444644
+INFO:root:Epoch 24, Step 1000, loss: 0.09472968429327011, disc_loss: 0.0008114756201393902
+INFO:root:Epoch 24, Step 1500, loss: 0.07135460525751114, disc_loss: 0.0007867517415434122
+INFO:root:Epoch 24, Step 2000, loss: 0.052008066326379776, disc_loss: 0.0024177301675081253
+INFO:root:Epoch 24, Step 2500, loss: 0.07200440764427185, disc_loss: 0.0012033435050398111
+INFO:root:Generator loss: 0.05741830962230858, Discriminator loss: 0.004550197507377411
+INFO:root:Epoch 25, Step 500, loss: 0.09516404569149017, disc_loss: 0.002547889482229948
+INFO:root:Epoch 25, Step 1000, loss: 0.08466432243585587, disc_loss: 0.0012965155765414238
+INFO:root:Epoch 25, Step 1500, loss: 0.07721935212612152, disc_loss: 0.001143267028965056
+INFO:root:Epoch 25, Step 2000, loss: 0.07635589689016342, disc_loss: 0.001205861335620284
+INFO:root:Epoch 25, Step 2500, loss: 0.07695108652114868, disc_loss: 0.0013524856185540557
+INFO:root:Generator loss: 0.05873448081603907, Discriminator loss: 0.005413147171548719
+INFO:root:Epoch 26, Step 500, loss: 0.058931972831487656, disc_loss: 0.0037759055849164724
+INFO:root:Epoch 26, Step 1000, loss: 0.08296294510364532, disc_loss: 0.001360696624033153
+INFO:root:Epoch 26, Step 1500, loss: 0.0768919587135315, disc_loss: 0.0020063435658812523
+INFO:root:Epoch 26, Step 2000, loss: 0.05474197492003441, disc_loss: 0.0005420314846560359
+INFO:root:Epoch 26, Step 2500, loss: 0.08467260748147964, disc_loss: 0.00021757598733529449
+INFO:root:Generator loss: 0.058640879868231355, Discriminator loss: 0.006124080524175034
+INFO:root:Epoch 27, Step 500, loss: 0.05587006360292435, disc_loss: 0.0002497948007658124
+INFO:root:Epoch 27, Step 1000, loss: 0.05296575278043747, disc_loss: 0.0001913917949423194
+INFO:root:Epoch 27, Step 1500, loss: 0.08924897015094757, disc_loss: 0.001527469721622765
+INFO:root:Epoch 27, Step 2000, loss: 0.06626518815755844, disc_loss: 0.001944436808116734
+INFO:root:Epoch 27, Step 2500, loss: 0.07532792538404465, disc_loss: 0.004725782200694084
+INFO:root:Generator loss: 0.057408283220477474, Discriminator loss: 0.005556985861103297
+INFO:root:Epoch 28, Step 500, loss: 0.0748543068766594, disc_loss: 0.0
+INFO:root:Epoch 28, Step 1000, loss: 0.0797930359840393, disc_loss: 0.001133180339820683
+INFO:root:Epoch 28, Step 1500, loss: 0.07312829047441483, disc_loss: 0.002663426799699664
+INFO:root:Epoch 28, Step 2000, loss: 0.09699901193380356, disc_loss: 0.001794573850929737
+INFO:root:Epoch 28, Step 2500, loss: 0.11595075577497482, disc_loss: 0.001269129803404212
+INFO:root:Generator loss: 0.05714442598118076, Discriminator loss: 0.005900920444157272
+INFO:root:Epoch 29, Step 500, loss: 0.06989624351263046, disc_loss: 0.0012025667820125818
+INFO:root:Epoch 29, Step 1000, loss: 0.07631413638591766, disc_loss: 0.0011897828662768006
+INFO:root:Epoch 29, Step 1500, loss: 0.09434197098016739, disc_loss: 0.004624688997864723
+INFO:root:Epoch 29, Step 2000, loss: 0.03592890873551369, disc_loss: 0.08826036006212234
+INFO:root:Epoch 29, Step 2500, loss: 0.10899823158979416, disc_loss: 0.0004770553787238896
+INFO:root:Generator loss: 0.057281291085177835, Discriminator loss: 0.004458869940543929
+INFO:root:Epoch 30, Step 500, loss: 0.08115249872207642, disc_loss: 0.002028284128755331
+INFO:root:Epoch 30, Step 1000, loss: 0.09075246751308441, disc_loss: 0.00017352442955598235
+INFO:root:Epoch 30, Step 1500, loss: 0.0649040937423706, disc_loss: 0.0007108297431841493
+INFO:root:Epoch 30, Step 2000, loss: 0.09569096565246582, disc_loss: 0.001740636769682169
+INFO:root:Epoch 30, Step 2500, loss: 0.07050278782844543, disc_loss: 0.0017530793556943536
+INFO:root:Generator loss: 0.057366555059346756, Discriminator loss: 0.0040345106140944375
+INFO:root:Epoch 31, Step 500, loss: 0.050448328256607056, disc_loss: 0.0010555722983554006
+INFO:root:Epoch 31, Step 1000, loss: 0.0795510858297348, disc_loss: 0.05300963297486305
+INFO:root:Epoch 31, Step 1500, loss: 0.0780567154288292, disc_loss: 0.0001768830989021808
+INFO:root:Epoch 31, Step 2000, loss: 0.043295349925756454, disc_loss: 0.00022320229618344456
+INFO:root:Epoch 31, Step 2500, loss: 0.09654666483402252, disc_loss: 0.000802653084974736
+INFO:root:Generator loss: 0.056884009662328414, Discriminator loss: 0.004701637641189946
+INFO:root:Epoch 32, Step 500, loss: 0.08741025626659393, disc_loss: 0.00034171974402852356
+INFO:root:Epoch 32, Step 1000, loss: 0.07043606042861938, disc_loss: 0.0015733246691524982
+INFO:root:Epoch 32, Step 1500, loss: 0.05502093583345413, disc_loss: 0.0019449738319963217
+INFO:root:Epoch 32, Step 2000, loss: 0.07792233675718307, disc_loss: 0.0012346566654741764
+INFO:root:Epoch 32, Step 2500, loss: 0.06700258702039719, disc_loss: 0.001347987330518663
+INFO:root:Generator loss: 0.057163541367982774, Discriminator loss: 0.006496685810242463
+INFO:root:Epoch 33, Step 500, loss: 0.08023751527070999, disc_loss: 0.002564936876296997
+INFO:root:Epoch 33, Step 1000, loss: 0.06922448426485062, disc_loss: 0.006045829504728317
+INFO:root:Epoch 33, Step 1500, loss: 0.07203518599271774, disc_loss: 0.0010193637572228909
+INFO:root:Epoch 33, Step 2000, loss: 0.07279422879219055, disc_loss: 0.001511300913989544
+INFO:root:Epoch 33, Step 2500, loss: 0.0569785051047802, disc_loss: 0.0006158404867164791
+INFO:root:Generator loss: 0.057275672786805815, Discriminator loss: 0.004643146884986494
+INFO:root:Epoch 34, Step 500, loss: 0.06095368415117264, disc_loss: 0.0018405593000352383
+INFO:root:Epoch 34, Step 1000, loss: 0.08966098725795746, disc_loss: 0.00309238419868052
+INFO:root:Epoch 34, Step 1500, loss: 0.06289619952440262, disc_loss: 0.00044076211634092033
+INFO:root:Epoch 34, Step 2000, loss: 0.05926872417330742, disc_loss: 0.0007593401824124157
+INFO:root:Epoch 34, Step 2500, loss: 0.05798639729619026, disc_loss: 0.002950472291558981
+INFO:root:Generator loss: 0.05698999577174777, Discriminator loss: 0.003641047713863019
+INFO:root:Epoch 35, Step 500, loss: 0.07984540611505508, disc_loss: 0.0019888582173734903
+INFO:root:Epoch 35, Step 1000, loss: 0.09089861065149307, disc_loss: 0.00045412161853164434
+INFO:root:Epoch 35, Step 1500, loss: 0.05838390439748764, disc_loss: 0.0006682067178189754
+INFO:root:Epoch 35, Step 2000, loss: 0.0966864600777626, disc_loss: 0.0011596105759963393
+INFO:root:Epoch 35, Step 2500, loss: 0.07555511593818665, disc_loss: 0.0007594635826535523
+INFO:root:Generator loss: 0.056051775758850925, Discriminator loss: 0.005199393702568362
+INFO:root:Epoch 36, Step 500, loss: 0.0970534160733223, disc_loss: 0.0013206180883571506
+INFO:root:Epoch 36, Step 1000, loss: 0.053872250020504, disc_loss: 0.001271057641133666
+INFO:root:Epoch 36, Step 1500, loss: 0.06781113147735596, disc_loss: 0.0004813654231838882
+INFO:root:Epoch 36, Step 2000, loss: 0.1020914688706398, disc_loss: 0.0019139916403219104
+INFO:root:Epoch 36, Step 2500, loss: 0.0968356803059578, disc_loss: 0.0009880386060103774
+INFO:root:Generator loss: 0.056975691416526884, Discriminator loss: 0.005230509735898098
+INFO:root:Epoch 37, Step 500, loss: 0.06927964836359024, disc_loss: 0.001022959011606872
+INFO:root:Epoch 37, Step 1000, loss: 0.0727388858795166, disc_loss: 0.0009786126902326941
+INFO:root:Epoch 37, Step 1500, loss: 0.05130571871995926, disc_loss: 0.0018390577752143145
+INFO:root:Epoch 37, Step 2000, loss: 0.07011726498603821, disc_loss: 0.0016986430855467916
+INFO:root:Epoch 37, Step 2500, loss: 0.05396604537963867, disc_loss: 0.0009398145484738052
+INFO:root:Generator loss: 0.05712557008978233, Discriminator loss: 0.004759584197141451
+INFO:root:Epoch 38, Step 500, loss: 0.05699978023767471, disc_loss: 0.0011754011502489448
+INFO:root:Epoch 38, Step 1000, loss: 0.08706803619861603, disc_loss: 0.0012054316466674209
+INFO:root:Epoch 38, Step 1500, loss: 0.07450193911790848, disc_loss: 0.0015500724548473954
+INFO:root:Epoch 38, Step 2000, loss: 0.10185310244560242, disc_loss: 0.0014067572774365544
+INFO:root:Epoch 38, Step 2500, loss: 0.07893197983503342, disc_loss: 0.00014332168211694807
+INFO:root:Generator loss: 0.05722385986699063, Discriminator loss: 0.00446825231522524
+INFO:root:Epoch 39, Step 500, loss: 0.06390556693077087, disc_loss: 0.0015229845885187387
+INFO:root:Epoch 39, Step 1000, loss: 0.053202345967292786, disc_loss: 0.0030286437831819057
+INFO:root:Epoch 39, Step 1500, loss: 0.06815934926271439, disc_loss: 0.0008500982658006251
+INFO:root:Epoch 39, Step 2000, loss: 0.062132980674505234, disc_loss: 0.0003744180721696466
+INFO:root:Epoch 39, Step 2500, loss: 0.06054622679948807, disc_loss: 0.001827040920034051
+INFO:root:Generator loss: 0.05740108811160893, Discriminator loss: 0.0032195808603010115
+INFO:root:Epoch 40, Step 500, loss: 0.1083717793226242, disc_loss: 0.0005294160800985992
+INFO:root:Epoch 40, Step 1000, loss: 0.0986258015036583, disc_loss: 0.0012466104235500097
+INFO:root:Epoch 40, Step 1500, loss: 0.11218245327472687, disc_loss: 0.00026675270055420697
+INFO:root:Epoch 40, Step 2000, loss: 0.08214039355516434, disc_loss: 0.00263597397133708
+INFO:root:Epoch 40, Step 2500, loss: 0.06866376847028732, disc_loss: 0.0014203956816345453
+INFO:root:Generator loss: 0.05852796395933165, Discriminator loss: 0.006382008272092348
+INFO:root:Epoch 41, Step 500, loss: 0.04615383595228195, disc_loss: 0.0006844665622338653
+INFO:root:Epoch 41, Step 1000, loss: 0.04971274361014366, disc_loss: 0.002300095744431019
+INFO:root:Epoch 41, Step 1500, loss: 0.06651940196752548, disc_loss: 0.0010457829339429736
+INFO:root:Epoch 41, Step 2000, loss: 0.10278129577636719, disc_loss: 0.000402500998461619
+INFO:root:Epoch 41, Step 2500, loss: 0.06718391925096512, disc_loss: 0.0010671097552403808
+INFO:root:Generator loss: 0.05715224222795477, Discriminator loss: 0.004474472522312319
+INFO:root:Epoch 42, Step 500, loss: 0.08717306703329086, disc_loss: 0.001157224178314209
+INFO:root:Epoch 42, Step 1000, loss: 0.08265505731105804, disc_loss: 0.00045969392522238195
+INFO:root:Epoch 42, Step 1500, loss: 0.0732187032699585, disc_loss: 0.0009630281128920615
+INFO:root:Epoch 42, Step 2000, loss: 0.05680694058537483, disc_loss: 0.004379537422209978
+INFO:root:Epoch 42, Step 2500, loss: 0.07698313891887665, disc_loss: 0.0029186175670474768
+INFO:root:Generator loss: 0.05626108846401127, Discriminator loss: 0.004603923926164127
+INFO:root:Epoch 43, Step 500, loss: 0.08082123100757599, disc_loss: 0.016999388113617897
+INFO:root:Epoch 43, Step 1000, loss: 0.10482807457447052, disc_loss: 0.0037022195756435394
+INFO:root:Epoch 43, Step 1500, loss: 0.08004220575094223, disc_loss: 0.00042559669236652553
+INFO:root:Epoch 43, Step 2000, loss: 0.11669391393661499, disc_loss: 0.0005049630417488515
+INFO:root:Epoch 43, Step 2500, loss: 0.0859336107969284, disc_loss: 0.0007630341569893062
+INFO:root:Generator loss: 0.056031567587074144, Discriminator loss: 0.0046003477270539755
+INFO:root:Epoch 44, Step 500, loss: 0.08021391183137894, disc_loss: 0.0006014569662511349
+INFO:root:Epoch 44, Step 1000, loss: 0.07528170943260193, disc_loss: 0.001419458887539804
+INFO:root:Epoch 44, Step 1500, loss: 0.06651131808757782, disc_loss: 0.0007421612390317023
+INFO:root:Epoch 44, Step 2000, loss: 0.07127374410629272, disc_loss: 0.0019953339360654354
+INFO:root:Epoch 44, Step 2500, loss: 0.0846218466758728, disc_loss: 0.0015700465301051736
+INFO:root:Generator loss: 0.05624216860974009, Discriminator loss: 0.00498004364345937
+INFO:root:Epoch 45, Step 500, loss: 0.09465916454792023, disc_loss: 0.0010208762250840664
+INFO:root:Epoch 45, Step 1000, loss: 0.09228595346212387, disc_loss: 0.0005924098077230155
+INFO:root:Epoch 45, Step 1500, loss: 0.06784258037805557, disc_loss: 0.000624408305156976
+INFO:root:Epoch 45, Step 2000, loss: 0.07065247744321823, disc_loss: 0.0014632070669904351
+INFO:root:Epoch 45, Step 2500, loss: 0.07929328829050064, disc_loss: 0.0005143442540429533
+INFO:root:Generator loss: 0.057220338816636976, Discriminator loss: 0.004777342953337175
+INFO:root:Epoch 46, Step 500, loss: 0.053060609847307205, disc_loss: 0.0027631164994090796
+INFO:root:Epoch 46, Step 1000, loss: 0.07043615728616714, disc_loss: 0.001706876209937036
+INFO:root:Epoch 46, Step 1500, loss: 0.08363183587789536, disc_loss: 0.0006380463601090014
+INFO:root:Epoch 46, Step 2000, loss: 0.06129850447177887, disc_loss: 0.004045386333018541
+INFO:root:Epoch 46, Step 2500, loss: 0.08185865730047226, disc_loss: 0.0014436081983149052
+INFO:root:Generator loss: 0.056528671382411015, Discriminator loss: 0.004516945388371541
+INFO:root:Epoch 47, Step 500, loss: 0.06087294593453407, disc_loss: 0.0012039495632052422
+INFO:root:Epoch 47, Step 1000, loss: 0.06827687472105026, disc_loss: 0.002102028811350465
+INFO:root:Epoch 47, Step 1500, loss: 0.07989835739135742, disc_loss: 0.002872074255719781
+INFO:root:Epoch 47, Step 2000, loss: 0.10047182440757751, disc_loss: 0.0007853006245568395
+INFO:root:Epoch 47, Step 2500, loss: 0.09070242196321487, disc_loss: 0.0007392395636998117
+INFO:root:Generator loss: 0.05618903619571797, Discriminator loss: 0.004368389732405279
+INFO:root:Epoch 48, Step 500, loss: 0.09473710507154465, disc_loss: 0.002110891742631793
+INFO:root:Epoch 48, Step 1000, loss: 0.10765685886144638, disc_loss: 0.0002782936207950115
+INFO:root:Epoch 48, Step 1500, loss: 0.085965596139431, disc_loss: 0.002364211017265916
+INFO:root:Epoch 48, Step 2000, loss: 0.06421199440956116, disc_loss: 0.001023874618113041
+INFO:root:Epoch 48, Step 2500, loss: 0.06092154607176781, disc_loss: 0.000400388496927917
+INFO:root:Generator loss: 0.056418325299921544, Discriminator loss: 0.0045999421600198135
+INFO:root:Epoch 49, Step 500, loss: 0.05200823023915291, disc_loss: 0.0006846746546216309
+INFO:root:Epoch 49, Step 1000, loss: 0.055509649217128754, disc_loss: 0.0011154969688504934
+INFO:root:Epoch 49, Step 1500, loss: 0.061429861932992935, disc_loss: 0.0021844760049134493
+INFO:root:Epoch 49, Step 2000, loss: 0.08187209814786911, disc_loss: 0.0007314817630685866
+INFO:root:Epoch 49, Step 2500, loss: 0.10453304648399353, disc_loss: 0.001607398153282702
+INFO:root:Generator loss: 0.05620874141713659, Discriminator loss: 0.004117189290659509
+Training finished.
+Starting batch evaluation...
+Evaluating: CMGAN_epoch_0_0.211
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  2.7208976702204026 csig:  4.110326710909261 cbak:  3.3913413239840784 covl:  3.4640404212567275 ssnr:  7.811974002005744 stoi:  0.932444626812086
+
+
+Evaluating: CMGAN_epoch_10_0.177
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0949735301501544 csig:  4.384766380003606 cbak:  3.6486592458092484 covl:  3.8132694113470373 ssnr:  9.144275973874912 stoi:  0.944602485794315
+
+
+Evaluating: CMGAN_epoch_1_0.190
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  2.7983962281525714 csig:  4.289286417070703 cbak:  3.5017453330500095 covl:  3.6033165944316377 ssnr:  8.931582933537623 stoi:  0.9378392289919107
+
+
+Evaluating: CMGAN_epoch_11_0.161
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.1909280992248683 csig:  4.407332919094933 cbak:  3.746911538718263 covl:  3.8742891399921704 ssnr:  9.748430240140035 stoi:  0.9494714979108912
+
+
+Evaluating: CMGAN_epoch_12_0.163
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.179252206121834 csig:  4.4279950677082525 cbak:  3.7322162017918683 covl:  3.879006944201811 ssnr:  9.6610348324316 stoi:  0.9505619363251044
+
+
+Evaluating: CMGAN_epoch_13_0.156
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.154320657542608 csig:  4.456943792146102 cbak:  3.7627487700075624 covl:  3.883439422678123 ssnr:  10.263712524408577 stoi:  0.9514558876557884
+
+
+Evaluating: CMGAN_epoch_14_0.153
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.195851615621048 csig:  4.473427062635944 cbak:  3.7939257905036032 covl:  3.91787062995014 ssnr:  10.455107789900921 stoi:  0.9517287563660028
+
+
+Evaluating: CMGAN_epoch_15_0.169
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.1160632967948914 csig:  4.369078096135603 cbak:  3.6864073744551566 covl:  3.811281499590139 ssnr:  9.442355155025055 stoi:  0.9515835816307544
+
+
+Evaluating: CMGAN_epoch_16_0.154
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.1910403735429336 csig:  4.4391542206800025 cbak:  3.786265311337261 covl:  3.895654913297256 ssnr:  10.384203409038408 stoi:  0.9514453721806926
+
+
+Evaluating: CMGAN_epoch_17_0.154
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.172542261411843 csig:  4.467473239234722 cbak:  3.777301227913017 covl:  3.8988789318619457 ssnr:  10.377576194212796 stoi:  0.9516142882152104
+
+
+Evaluating: CMGAN_epoch_18_0.156
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.1887620367760796 csig:  4.428318643997971 cbak:  3.774170271834814 covl:  3.8884309337591225 ssnr:  10.218130981162163 stoi:  0.9527985442825342
+
+
+Evaluating: CMGAN_epoch_19_0.149
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.215067087446602 csig:  4.46545410758616 cbak:  3.817635663751684 covl:  3.9188938249552376 ssnr:  10.68838158077795 stoi:  0.9529873493210885
+
+
+Evaluating: CMGAN_epoch_20_0.152
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.171402739234341 csig:  4.454484794422925 cbak:  3.7891669001995636 covl:  3.8917429595398945 ssnr:  10.561920947193839 stoi:  0.952057854487196
+
+
+Evaluating: CMGAN_epoch_2_0.182
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  2.9031324801803793 csig:  4.297364605956296 cbak:  3.5689935707320766 covl:  3.658640832279077 ssnr:  9.17420097293959 stoi:  0.9408016768607691
+
+
+Evaluating: CMGAN_epoch_21_0.153
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2286974695122357 csig:  4.476898127363134 cbak:  3.8048255512697504 covl:  3.937154251852476 ssnr:  10.391842441685641 stoi:  0.9532750692666634
+
+
+Evaluating: CMGAN_epoch_22_0.154
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2369510700691095 csig:  4.471027101352156 cbak:  3.8050216549723843 covl:  3.935020051652742 ssnr:  10.348574632469115 stoi:  0.952282855541007
+
+
+Evaluating: CMGAN_epoch_23_0.150
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.1895374393868217 csig:  4.439071360880697 cbak:  3.796122024609403 covl:  3.891238583478222 ssnr:  10.527778123450716 stoi:  0.9544554843332668
+
+
+Evaluating: CMGAN_epoch_24_0.154
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2390800967667865 csig:  4.487659784207643 cbak:  3.8057340453714046 covl:  3.947972955395247 ssnr:  10.335671508369726 stoi:  0.9527612236924851
+
+
+Evaluating: CMGAN_epoch_25_0.148
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2593856840168387 csig:  4.48222028157215 cbak:  3.842484650604202 covl:  3.9561665771990966 ssnr:  10.726486198252577 stoi:  0.9541235529109158
+
+
+Evaluating: CMGAN_epoch_26_0.148
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.260684499028817 csig:  4.50143572344424 cbak:  3.8442812855800663 covl:  3.967141142294466 ssnr:  10.747304768239335 stoi:  0.9538923143284244
+
+
+Evaluating: CMGAN_epoch_27_0.145
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2615750375592594 csig:  4.490091635071876 cbak:  3.8575811906065294 covl:  3.95714822134438 ssnr:  10.94356822140647 stoi:  0.9530563237885757
+
+
+Evaluating: CMGAN_epoch_28_0.150
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2420460369112423 csig:  4.48777336990756 cbak:  3.827710960630519 covl:  3.9485306362186816 ssnr:  10.643952385016426 stoi:  0.9530386993422703
+
+
+Evaluating: CMGAN_epoch_29_0.158
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2359156502971373 csig:  4.4708904172236705 cbak:  3.7978210182469114 covl:  3.940496993810677 ssnr:  10.23820250134547 stoi:  0.9535521428714786
+
+
+Evaluating: CMGAN_epoch_30_0.153
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.228383399329139 csig:  4.497426922442967 cbak:  3.7870972195297736 covl:  3.9470416856554857 ssnr:  10.07996608008311 stoi:  0.9548371920024525
+
+
+Evaluating: CMGAN_epoch_3_0.185
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  2.9094910241157104 csig:  4.342329026307705 cbak:  3.5572869193358403 covl:  3.691052162108153 ssnr:  8.928317986060645 stoi:  0.9436211870636625
+
+
+Evaluating: CMGAN_epoch_31_0.147
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2576223747822843 csig:  4.5022655522418775 cbak:  3.8473476589874727 covl:  3.9646556289575847 ssnr:  10.810691935020825 stoi:  0.9544704100445653
+
+
+Evaluating: CMGAN_epoch_32_0.149
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.251602969412665 csig:  4.480523252201128 cbak:  3.8341968156626485 covl:  3.9493103964247216 ssnr:  10.670135951960447 stoi:  0.954662818101333
+
+
+Evaluating: CMGAN_epoch_33_0.150
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2590105957487254 csig:  4.456152260474819 cbak:  3.8242666326185946 covl:  3.9386252283299545 ssnr:  10.455970171763735 stoi:  0.9553119250742514
+
+
+Evaluating: CMGAN_epoch_34_0.146
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3058562265727125 csig:  4.478448663672156 cbak:  3.8709962042410915 covl:  3.9791058453026906 ssnr:  10.827407604090485 stoi:  0.9534110354270654
+
+
+Evaluating: CMGAN_epoch_35_0.149
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.28130569634507 csig:  4.473786794633043 cbak:  3.843482234695503 covl:  3.961246960052461 ssnr:  10.593624677197186 stoi:  0.9543553747570924
+
+
+Evaluating: CMGAN_epoch_36_0.148
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2998412909727652 csig:  4.498932208057523 cbak:  3.860235792691122 covl:  3.9894989144119153 ssnr:  10.709658720484125 stoi:  0.9540468167283539
+
+
+Evaluating: CMGAN_epoch_37_0.146
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3014204267737934 csig:  4.515919955632299 cbak:  3.8700548980847165 covl:  3.99959395249346 ssnr:  10.843146022546053 stoi:  0.9539594777416571
+
+
+Evaluating: CMGAN_epoch_38_0.149
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2639203167077406 csig:  4.471445861445574 cbak:  3.841023667838633 covl:  3.9507486453098637 ssnr:  10.683595923801766 stoi:  0.9546716929024522
+
+
+Evaluating: CMGAN_epoch_39_0.148
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2756015502133415 csig:  4.4852603289502815 cbak:  3.8515705840322645 covl:  3.9682555465547895 ssnr:  10.749975946618788 stoi:  0.9548503401043644
+
+
+Evaluating: CMGAN_epoch_40_0.148
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2749975086415857 csig:  4.509741152379412 cbak:  3.8471327902681565 covl:  3.980067491636468 ssnr:  10.685561310655945 stoi:  0.9539010978973055
+
+
+Evaluating: CMGAN_epoch_4_0.180
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0236711208392117 csig:  4.304707156293828 cbak:  3.6250111705675723 covl:  3.725317375785278 ssnr:  9.178026893125535 stoi:  0.9425649021640474
+
+
+Evaluating: CMGAN_epoch_41_0.148
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2980736980160463 csig:  4.527734133364486 cbak:  3.8559990073955484 covl:  4.004848527587108 ssnr:  10.650604427443264 stoi:  0.954311139523982
+
+
+Evaluating: CMGAN_epoch_42_0.152
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.264579600066815 csig:  4.472655435336544 cbak:  3.8272541019154875 covl:  3.954972001274926 ssnr:  10.477332845672942 stoi:  0.9543298472799919
+
+
+Evaluating: CMGAN_epoch_43_0.148
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3293111039307512 csig:  4.524031428826835 cbak:  3.870354355196607 covl:  4.018733467107712 ssnr:  10.653236870130403 stoi:  0.9542378901287317
+
+
+Evaluating: CMGAN_epoch_44_0.146
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.291708615943066 csig:  4.5192918886461415 cbak:  3.8655539341450726 covl:  3.995423580169757 ssnr:  10.84653521129503 stoi:  0.9546294949913056
+
+
+Evaluating: CMGAN_epoch_45_0.150
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.271816990329224 csig:  4.480944003620694 cbak:  3.8373708160418762 covl:  3.961294227292521 ssnr:  10.561159732532651 stoi:  0.9546168101168722
+
+
+Evaluating: CMGAN_epoch_46_0.149
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.285047586826445 csig:  4.466942414118947 cbak:  3.8429381775453186 covl:  3.961429529419674 ssnr:  10.557432278837762 stoi:  0.954936291901838
+
+
+Evaluating: CMGAN_epoch_47_0.146
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2866543602306866 csig:  4.492047057374585 cbak:  3.861155139591355 covl:  3.974989582016553 ssnr:  10.817448521440737 stoi:  0.9543174768423073
+
+
+Evaluating: CMGAN_epoch_48_0.149
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2729632352451676 csig:  4.488373420402423 cbak:  3.8437054008320386 covl:  3.96571640805933 ssnr:  10.659844167222149 stoi:  0.9544391970070126
+
+
+Evaluating: CMGAN_epoch_49_0.149
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2999157241536574 csig:  4.507604704258109 cbak:  3.854950553558097 covl:  3.9926207924266186 ssnr:  10.63089614588958 stoi:  0.9544185825442655
+
+
+Evaluating: CMGAN_epoch_5_0.174
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0631522008226915 csig:  4.339868550343301 cbak:  3.6541311255440294 covl:  3.7659246716125288 ssnr:  9.322496747510787 stoi:  0.9425231380655655
+
+
+Evaluating: CMGAN_epoch_6_0.180
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.1166071216168914 csig:  4.428645022214572 cbak:  3.6409155562160986 covl:  3.8397757418489165 ssnr:  8.864973289097355 stoi:  0.9452583708484991
+
+
+Evaluating: CMGAN_epoch_7_0.182
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0390519397062006 csig:  4.403245296145301 cbak:  3.6335894749339808 covl:  3.796943902611343 ssnr:  9.158933779007018 stoi:  0.9405819659422823
+
+
+Evaluating: CMGAN_epoch_8_0.164
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0524791484897578 csig:  4.342866602523449 cbak:  3.6928771557183357 covl:  3.767682134122369 ssnr:  9.963017526948136 stoi:  0.9471426836790219
+
+
+Evaluating: CMGAN_epoch_9_0.162
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0622667744032386 csig:  4.407728651278065 cbak:  3.7054648584360304 covl:  3.801370093461246 ssnr:  10.103655259335547 stoi:  0.9488174404977411
+
+
+Starting batch evaluation...
+Evaluating: CMGAN_epoch_0_0.088
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  2.7963755483766204 csig:  4.306310989123508 cbak:  3.416321770089101 covl:  3.6074247288269703 ssnr:  7.6018922699069025 stoi:  0.9332367137302806
+
+
+Evaluating: CMGAN_epoch_10_0.062
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2513703906420366 csig:  4.53263627829716 cbak:  3.7821543435721097 covl:  3.9767146975693115 ssnr:  9.827579131027722 stoi:  0.9503864172342273
+
+
+Evaluating: CMGAN_epoch_1_0.077
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  2.963940045931964 csig:  4.412371374612389 cbak:  3.5874846897200605 covl:  3.7555989626402146 ssnr:  9.025011373204872 stoi:  0.9422957360163989
+
+
+Evaluating: CMGAN_epoch_11_0.062
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2363203739367643 csig:  4.498114502856144 cbak:  3.7761236499673956 covl:  3.9471230520056015 ssnr:  9.854971761020042 stoi:  0.952747201054646
+
+
+Evaluating: CMGAN_epoch_12_0.059
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.35077946336524 csig:  4.583894262583758 cbak:  3.8634189364901594 covl:  4.058088619552747 ssnr:  10.359155361475233 stoi:  0.9541938178420615
+
+
+Evaluating: CMGAN_epoch_13_0.061
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.291545310790099 csig:  4.52116746669166 cbak:  3.8168519186018988 covl:  3.993341688608968 ssnr:  10.077637852696617 stoi:  0.9531120849048133
+
+
+Evaluating: CMGAN_epoch_14_0.060
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.309910717085727 csig:  4.528295829311704 cbak:  3.8078571785264517 covl:  4.003736222385329 ssnr:  9.813071916624699 stoi:  0.9549954554474622
+
+
+Evaluating: CMGAN_epoch_15_0.063
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2893804674877702 csig:  4.490280491116783 cbak:  3.780588418424604 covl:  3.9743063148065905 ssnr:  9.589958450661896 stoi:  0.9546281397911098
+
+
+Evaluating: CMGAN_epoch_16_0.061
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.273549582194356 csig:  4.545221990876618 cbak:  3.7922176518491457 covl:  3.9980066577540128 ssnr:  9.810160616307813 stoi:  0.955111584290598
+
+
+Evaluating: CMGAN_epoch_17_0.058
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2960785553582665 csig:  4.5668105287678165 cbak:  3.8364694514322384 covl:  4.019920130101192 ssnr:  10.33243428834263 stoi:  0.9550160880275315
+
+
+Evaluating: CMGAN_epoch_18_0.060
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2067715561795005 csig:  4.512364437458183 cbak:  3.7990346941238595 covl:  3.94664788981788 ssnr:  10.423501416385514 stoi:  0.9555523301560686
+
+
+Evaluating: CMGAN_epoch_19_0.060
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.324239817059156 csig:  4.564828478113388 cbak:  3.8256594043192997 covl:  4.041872324010457 ssnr:  9.964083178563056 stoi:  0.9543783675055534
+
+
+Evaluating: CMGAN_epoch_20_0.058
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.266079627773137 csig:  4.520038433743221 cbak:  3.8295571356298197 covl:  3.9786511557694513 ssnr:  10.43981957484713 stoi:  0.9554484317258254
+
+
+Evaluating: CMGAN_epoch_2_0.074
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  2.922246919962966 csig:  4.409571694253462 cbak:  3.542718303319361 covl:  3.728742687789492 ssnr:  8.586236668392996 stoi:  0.9463818072436421
+
+
+Evaluating: CMGAN_epoch_21_0.060
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2406235633833895 csig:  4.5020689924451895 cbak:  3.8026264913461127 covl:  3.9521870136348 ssnr:  10.226636667416102 stoi:  0.9552307140902506
+
+
+Evaluating: CMGAN_epoch_22_0.058
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3433535402839625 csig:  4.553377430224815 cbak:  3.8510118685278205 covl:  4.042304398521402 ssnr:  10.209431912575129 stoi:  0.9554985744290038
+
+
+Evaluating: CMGAN_epoch_23_0.059
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.2708771290999015 csig:  4.54739599844973 cbak:  3.8271163232758356 covl:  3.995848845392873 ssnr:  10.375552487842407 stoi:  0.9551107752477732
+
+
+Evaluating: CMGAN_epoch_24_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3025974809255416 csig:  4.534849511556491 cbak:  3.8528801461839977 covl:  4.006188075869753 ssnr:  10.552294377322257 stoi:  0.9561667430288647
+
+
+Evaluating: CMGAN_epoch_25_0.058
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.322342139569301 csig:  4.519634267821626 cbak:  3.851457909882034 covl:  4.010388895887027 ssnr:  10.38666786587335 stoi:  0.9556526961607393
+
+
+Evaluating: CMGAN_epoch_26_0.058
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3204454051927454 csig:  4.562531913593624 cbak:  3.8430536853233166 covl:  4.036253292373186 ssnr:  10.258716582067542 stoi:  0.9562213740198406
+
+
+Evaluating: CMGAN_epoch_27_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3622166006599814 csig:  4.573023205215298 cbak:  3.87178251318301 covl:  4.062951747780029 ssnr:  10.40091581020859 stoi:  0.9561340596000635
+
+
+Evaluating: CMGAN_epoch_28_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3330578390255714 csig:  4.539078241942927 cbak:  3.8657475025063177 covl:  4.027555872031044 ssnr:  10.508579707702053 stoi:  0.9557696845463896
+
+
+Evaluating: CMGAN_epoch_29_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3708077146879676 csig:  4.6010385044602335 cbak:  3.8848231007664555 covl:  4.085317471470609 ssnr:  10.535020522445064 stoi:  0.9557898554148124
+
+
+Evaluating: CMGAN_epoch_30_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3298574635415403 csig:  4.542282408915996 cbak:  3.8708935587805446 covl:  4.026441849548852 ssnr:  10.629048082872457 stoi:  0.9559605661752708
+
+
+Evaluating: CMGAN_epoch_3_0.073
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0693536810215236 csig:  4.480607876039263 cbak:  3.6722126106587347 covl:  3.844455533442785 ssnr:  9.517545678999413 stoi:  0.9461270298837133
+
+
+Evaluating: CMGAN_epoch_31_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3580903993937574 csig:  4.551913520094746 cbak:  3.878017391128945 covl:  4.048703913075425 ssnr:  10.518621957503601 stoi:  0.9560438179335183
+
+
+Evaluating: CMGAN_epoch_32_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3617431013618857 csig:  4.565566324545626 cbak:  3.8782179182047667 covl:  4.059332008215712 ssnr:  10.497448151016295 stoi:  0.9555957261946354
+
+
+Evaluating: CMGAN_epoch_33_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3774960725342185 csig:  4.567949805603873 cbak:  3.8694497395116896 covl:  4.069228723040333 ssnr:  10.254741256636864 stoi:  0.9558814654427698
+
+
+Evaluating: CMGAN_epoch_34_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3495116738729105 csig:  4.57647648084336 cbak:  3.8781426805037804 covl:  4.056759506118377 ssnr:  10.586681613279634 stoi:  0.9561336640663244
+
+
+Evaluating: CMGAN_epoch_35_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3555716471475305 csig:  4.601824486494171 cbak:  3.8913094632596175 covl:  4.075376238242544 ssnr:  10.744917592811625 stoi:  0.9555984648411521
+
+
+Evaluating: CMGAN_epoch_36_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3624688330495243 csig:  4.562763981395013 cbak:  3.87476527041005 covl:  4.058100324738229 ssnr:  10.443945772021182 stoi:  0.9562830251930848
+
+
+Evaluating: CMGAN_epoch_37_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.333101470204233 csig:  4.593245568793037 cbak:  3.873539031698324 covl:  4.059143187830352 ssnr:  10.634453268288484 stoi:  0.956227417575662
+
+
+Evaluating: CMGAN_epoch_38_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3448820183578047 csig:  4.5844182907626525 cbak:  3.874473050261394 covl:  4.062629177825695 ssnr:  10.572134313225089 stoi:  0.9565290319013241
+
+
+Evaluating: CMGAN_epoch_39_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3390374561247316 csig:  4.575490235872695 cbak:  3.8707267436872788 covl:  4.053384462713948 ssnr:  10.548798329192893 stoi:  0.9566491667463736
+
+
+Evaluating: CMGAN_epoch_40_0.058
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3218595766037415 csig:  4.559310591247789 cbak:  3.853834238211595 covl:  4.033946549149329 ssnr:  10.415602995738706 stoi:  0.9566996720961565
+
+
+Evaluating: CMGAN_epoch_4_0.071
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0926034190122365 csig:  4.517769915437064 cbak:  3.6920418608055283 covl:  3.8786666239230416 ssnr:  9.64605854535169 stoi:  0.9475221039980048
+
+
+Evaluating: CMGAN_epoch_41_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3474639956522916 csig:  4.590278833585756 cbak:  3.880419447203922 covl:  4.065123887075747 ssnr:  10.641241102167372 stoi:  0.9564513113799888
+
+
+Evaluating: CMGAN_epoch_42_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3762570150847573 csig:  4.606053070974535 cbak:  3.898742952619778 covl:  4.0899026431851055 ssnr:  10.706392107431757 stoi:  0.9562245761909097
+
+
+Evaluating: CMGAN_epoch_43_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.373521828535691 csig:  4.592574953460995 cbak:  3.892154055116704 covl:  4.081073402434405 ssnr:  10.630275203567924 stoi:  0.9555470848955167
+
+
+Evaluating: CMGAN_epoch_44_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3505673094571216 csig:  4.590875362747821 cbak:  3.8850932439393824 covl:  4.067698782421703 ssnr:  10.684147238857859 stoi:  0.9571548955722171
+
+
+Evaluating: CMGAN_epoch_45_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3580021768519024 csig:  4.60031012676815 cbak:  3.8827803806752152 covl:  4.07548975174079 ssnr:  10.595515650029418 stoi:  0.9561613709188602
+
+
+Evaluating: CMGAN_epoch_46_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.37345292744706 csig:  4.579956739029972 cbak:  3.890061675696736 covl:  4.07498652199828 ssnr:  10.61133343049737 stoi:  0.9566746632438663
+
+
+Evaluating: CMGAN_epoch_47_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3609031881522204 csig:  4.585303052780614 cbak:  3.891136498873709 covl:  4.072483863982196 ssnr:  10.703142429706505 stoi:  0.9569138279769411
+
+
+Evaluating: CMGAN_epoch_48_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3553808811798835 csig:  4.583818574876328 cbak:  3.8892306963185925 covl:  4.067204319571277 ssnr:  10.714127094776911 stoi:  0.9566968011085417
+
+
+Evaluating: CMGAN_epoch_49_0.056
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.3787239989609392 csig:  4.585022923746516 cbak:  3.8944801338137607 covl:  4.079196188723654 ssnr:  10.632354155349274 stoi:  0.956638721328841
+
+
+Evaluating: CMGAN_epoch_5_0.069
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.163486459446185 csig:  4.512413228230051 cbak:  3.6931931360876016 covl:  3.916132364138226 ssnr:  9.120757531041784 stoi:  0.9465277169100706
+
+
+Evaluating: CMGAN_epoch_6_0.069
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.0705267007200465 csig:  4.430611109510145 cbak:  3.669867980874364 covl:  3.816036280354267 ssnr:  9.455923900711651 stoi:  0.9505709125559177
+
+
+Evaluating: CMGAN_epoch_7_0.067
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.192484637921296 csig:  4.456756276360913 cbak:  3.7299488845863307 covl:  3.901105742347948 ssnr:  9.488834512468719 stoi:  0.9508883642207341
+
+
+Evaluating: CMGAN_epoch_8_0.066
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.1631422147010135 csig:  4.467903457935312 cbak:  3.7343716001864364 covl:  3.889366614493635 ssnr:  9.76724273675727 stoi:  0.9517167937288196
+
+
+Evaluating: CMGAN_epoch_9_0.063
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.229395827477418 csig:  4.52853773150985 cbak:  3.7514525536194023 covl:  3.9565894000078012 ssnr:  9.524589933180595 stoi:  0.9521572647547479
+
+

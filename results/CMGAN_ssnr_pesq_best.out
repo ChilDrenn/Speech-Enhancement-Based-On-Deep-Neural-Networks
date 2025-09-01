@@ -1,0 +1,16 @@
+Starting evaluation:
+./saved_models_log/saved_models_20250718_VoiceDEMAND_16khz/CMGAN_epoch_43_0.144
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.307689270782239 csig:  4.510433509175034 cbak:  3.8851610364485487 covl:  3.996828008386467 ssnr:  11.021475577185587 stoi:  0.9558960490473036
+
+
+Evaluation finished.
+Starting evaluation:
+./saved_models_log/saved_models_20250717_VoiceDEMAND_16khz/CMGAN_epoch_45_0.057
+evaluation.py:77: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict((torch.load(model_path)))
+pesq:  3.385541352976873 csig:  4.618049960679488 cbak:  3.8912240729433143 covl:  4.099159981424591 ssnr:  10.51971707954418 stoi:  0.9566000510651131
+
+
+Evaluation finished.

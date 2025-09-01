@@ -1,0 +1,845 @@
+Starting training:
+without SE:
+Namespace(batch_size=4, cut_len=32000, data_dir='/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/DEMAND_16KHz', decay_epoch=12, epochs=60, init_lr=0.0005, log_interval=500, loss_weights=[0.1, 0.9, 0.2, 0.05, 0.09], save_model_dir='./saved_models_log/saved_models_20250813_VoiceDEMAND_16khz')
+['NVIDIA A100-SXM4-80GB']
+====================================================================================================
+Layer (type:depth-idx)                             Output Shape              Param #
+====================================================================================================
+TSCNet                                             [1, 1, 321, 201]          --
+├─DenseEncoder: 1-1                                [1, 64, 321, 101]         --
+│    └─Sequential: 2-1                             [1, 64, 321, 201]         --
+│    │    └─Conv2d: 3-1                            [1, 64, 321, 201]         256
+│    │    └─InstanceNorm2d: 3-2                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-3                             [1, 64, 321, 201]         64
+│    └─DilatedDenseNet: 2-2                        [1, 64, 321, 201]         --
+│    │    └─ConstantPad2d: 3-4                     [1, 64, 322, 203]         --
+│    │    └─Conv2d: 3-5                            [1, 64, 321, 201]         24,640
+│    │    └─InstanceNorm2d: 3-6                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-7                             [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-8                     [1, 128, 323, 203]        --
+│    │    └─Conv2d: 3-9                            [1, 64, 321, 201]         49,216
+│    │    └─InstanceNorm2d: 3-10                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-11                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-12                    [1, 192, 325, 203]        --
+│    │    └─Conv2d: 3-13                           [1, 64, 321, 201]         73,792
+│    │    └─InstanceNorm2d: 3-14                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-15                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-16                    [1, 256, 329, 203]        --
+│    │    └─Conv2d: 3-17                           [1, 64, 321, 201]         98,368
+│    │    └─InstanceNorm2d: 3-18                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-19                            [1, 64, 321, 201]         64
+│    └─Sequential: 2-3                             [1, 64, 321, 101]         --
+│    │    └─Conv2d: 3-20                           [1, 64, 321, 101]         12,352
+│    │    └─InstanceNorm2d: 3-21                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-22                            [1, 64, 321, 101]         64
+├─TSCB: 1-2                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-4                         [101, 321, 64]            --
+│    │    └─Scale: 3-23                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-24                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-25              [101, 321, 64]            29,376
+│    │    └─Scale: 3-26                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-27                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-5                         [321, 101, 64]            --
+│    │    └─Scale: 3-28                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-29                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-30              [321, 101, 64]            29,376
+│    │    └─Scale: 3-31                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-32                        [321, 101, 64]            128
+├─TSCB: 1-3                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-6                         [101, 321, 64]            --
+│    │    └─Scale: 3-33                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-34                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-35              [101, 321, 64]            29,376
+│    │    └─Scale: 3-36                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-37                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-7                         [321, 101, 64]            --
+│    │    └─Scale: 3-38                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-39                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-40              [321, 101, 64]            29,376
+│    │    └─Scale: 3-41                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-42                        [321, 101, 64]            128
+├─TSCB: 1-4                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-8                         [101, 321, 64]            --
+│    │    └─Scale: 3-43                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-44                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-45              [101, 321, 64]            29,376
+│    │    └─Scale: 3-46                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-47                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-9                         [321, 101, 64]            --
+│    │    └─Scale: 3-48                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-49                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-50              [321, 101, 64]            29,376
+│    │    └─Scale: 3-51                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-52                        [321, 101, 64]            128
+├─TSCB: 1-5                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-10                        [101, 321, 64]            --
+│    │    └─Scale: 3-53                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-54                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-55              [101, 321, 64]            29,376
+│    │    └─Scale: 3-56                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-57                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-11                        [321, 101, 64]            --
+│    │    └─Scale: 3-58                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-59                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-60              [321, 101, 64]            29,376
+│    │    └─Scale: 3-61                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-62                        [321, 101, 64]            128
+├─MaskDecoder: 1-6                                 [1, 1, 321, 201]          --
+│    └─DilatedDenseNet: 2-12                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-63                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-64                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-65                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-66                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-67                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-68                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-69                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-70                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-71                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-72                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-73                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-74                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-75                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-76                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-77                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-78                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-13                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-79                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-80                           [1, 128, 321, 101]        24,704
+│    └─Conv2d: 2-14                                [1, 1, 321, 201]          129
+│    └─InstanceNorm2d: 2-15                        [1, 1, 321, 201]          2
+│    └─PReLU: 2-16                                 [1, 1, 321, 201]          1
+│    └─Conv2d: 2-17                                [1, 1, 321, 201]          2
+│    └─PReLU: 2-18                                 [1, 201, 321]             201
+├─ComplexDecoder: 1-7                              [1, 2, 321, 201]          --
+│    └─DilatedDenseNet: 2-19                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-81                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-82                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-83                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-84                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-85                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-86                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-87                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-88                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-89                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-90                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-91                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-92                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-93                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-94                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-95                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-96                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-20                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-97                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-98                           [1, 128, 321, 101]        24,704
+│    └─InstanceNorm2d: 2-21                        [1, 64, 321, 202]         128
+│    └─PReLU: 2-22                                 [1, 64, 321, 202]         64
+│    └─Conv2d: 2-23                                [1, 2, 321, 201]          258
+====================================================================================================
+Total params: 1,834,833
+Trainable params: 1,834,833
+Non-trainable params: 0
+Total mult-adds (G): 41.56
+====================================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 4856.40
+Params size (MB): 7.34
+Estimated Total Size (MB): 4864.25
+====================================================================================================
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+Discriminator                            [1, 1]                    --
+├─Sequential: 1-1                        [1, 1]                    --
+│    └─Conv2d: 2-1                       [1, 16, 100, 160]         512
+│    └─InstanceNorm2d: 2-2               [1, 16, 100, 160]         32
+│    └─PReLU: 2-3                        [1, 16, 100, 160]         16
+│    └─Conv2d: 2-4                       [1, 32, 50, 80]           8,192
+│    └─InstanceNorm2d: 2-5               [1, 32, 50, 80]           64
+│    └─PReLU: 2-6                        [1, 32, 50, 80]           32
+│    └─Conv2d: 2-7                       [1, 64, 25, 40]           32,768
+│    └─InstanceNorm2d: 2-8               [1, 64, 25, 40]           128
+│    └─PReLU: 2-9                        [1, 64, 25, 40]           64
+│    └─Conv2d: 2-10                      [1, 128, 12, 20]          131,072
+│    └─InstanceNorm2d: 2-11              [1, 128, 12, 20]          256
+│    └─PReLU: 2-12                       [1, 128, 12, 20]          128
+│    └─AdaptiveMaxPool2d: 2-13           [1, 128, 1, 1]            --
+│    └─Flatten: 2-14                     [1, 128]                  --
+│    └─Linear: 2-15                      [1, 64]                   8,256
+│    └─Dropout: 2-16                     [1, 64]                   --
+│    └─PReLU: 2-17                       [1, 64]                   64
+│    └─Linear: 2-18                      [1, 1]                    65
+│    └─LearnableSigmoid: 2-19            [1, 1]                    1
+==========================================================================================
+Total params: 181,650
+Trainable params: 181,650
+Non-trainable params: 0
+Total mult-adds (M): 19.67
+==========================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 11.49
+Params size (MB): 0.73
+Estimated Total Size (MB): 12.73
+==========================================================================================
+/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/CMGAN_src/data/dataloader.py:52: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. With dispatcher enabled, this function is no-op. You can remove the function call.
+  torchaudio.set_audio_backend("sox_io")         # in linux
+INFO:root:Epoch 0, Step 500, loss: 0.2748509645462036, disc_loss: 0.007798147387802601
+INFO:root:Epoch 0, Step 1000, loss: 0.2481367290019989, disc_loss: 0.004430229309946299
+INFO:root:Epoch 0, Step 1500, loss: 0.17560526728630066, disc_loss: 0.013743666931986809
+INFO:root:Epoch 0, Step 2000, loss: 0.22161225974559784, disc_loss: 0.0038967072032392025
+INFO:root:Epoch 0, Step 2500, loss: 0.21197694540023804, disc_loss: 0.02171323075890541
+INFO:root:Generator loss: 0.11381561479088172, Discriminator loss: 0.006602818289253459
+INFO:root:
+=== Epoch 0 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.7298,SSNR: 9.3325,CSIG: 4.2002,CBAK: 3.4910,COVL: 3.5209,STOI: 0.9393
+
+INFO:root:Epoch 1, Step 500, loss: 0.24138537049293518, disc_loss: 0.0034960287157446146
+INFO:root:Epoch 1, Step 1000, loss: 0.12011449038982391, disc_loss: 0.025703981518745422
+INFO:root:Epoch 1, Step 1500, loss: 0.19460664689540863, disc_loss: 0.004878198262304068
+INFO:root:Epoch 1, Step 2000, loss: 0.13999830186367035, disc_loss: 0.0035903211683034897
+INFO:root:Epoch 1, Step 2500, loss: 0.13789014518260956, disc_loss: 0.003781465580686927
+INFO:root:Generator loss: 0.10705053985335873, Discriminator loss: 0.009894467949035387
+INFO:root:
+=== Epoch 1 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.7686,SSNR: 9.6520,CSIG: 4.2596,CBAK: 3.5356,COVL: 3.5727,STOI: 0.9410
+
+INFO:root:Epoch 2, Step 500, loss: 0.14625436067581177, disc_loss: 0.005472118500620127
+INFO:root:Epoch 2, Step 1000, loss: 0.20609521865844727, disc_loss: 0.0034709761384874582
+INFO:root:Epoch 2, Step 1500, loss: 0.119683176279068, disc_loss: 0.0007125402335077524
+INFO:root:Epoch 2, Step 2000, loss: 0.10149657726287842, disc_loss: 0.005606130696833134
+INFO:root:Epoch 2, Step 2500, loss: 0.07803589850664139, disc_loss: 0.009997385554015636
+INFO:root:Generator loss: 0.10089275922662425, Discriminator loss: 0.0065317702878354734
+INFO:root:
+=== Epoch 2 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.0020,SSNR: 9.5563,CSIG: 4.4414,CBAK: 3.6410,COVL: 3.7912,STOI: 0.9463
+
+INFO:root:Epoch 3, Step 500, loss: 0.14738494157791138, disc_loss: 0.0017958487151190639
+INFO:root:Epoch 3, Step 1000, loss: 0.1986459642648697, disc_loss: 0.00049262261018157
+INFO:root:Epoch 3, Step 1500, loss: 0.1374630481004715, disc_loss: 0.001756644924171269
+INFO:root:Epoch 3, Step 2000, loss: 0.11032555997371674, disc_loss: 0.002893890021368861
+INFO:root:Epoch 3, Step 2500, loss: 0.11619354039430618, disc_loss: 0.004045808222144842
+INFO:root:Generator loss: 0.10121949158102564, Discriminator loss: 0.0077405629942484105
+INFO:root:
+=== Epoch 3 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.0040,SSNR: 9.6483,CSIG: 4.4615,CBAK: 3.6499,COVL: 3.8041,STOI: 0.9461
+
+INFO:root:Epoch 4, Step 500, loss: 0.14544877409934998, disc_loss: 0.0022315173409879208
+INFO:root:Epoch 4, Step 1000, loss: 0.18169444799423218, disc_loss: 0.0012289161095395684
+INFO:root:Epoch 4, Step 1500, loss: 0.14346852898597717, disc_loss: 0.00212719920091331
+INFO:root:Epoch 4, Step 2000, loss: 0.06989707797765732, disc_loss: 0.0005000117234885693
+INFO:root:Epoch 4, Step 2500, loss: 0.1151028424501419, disc_loss: 0.0015521524474024773
+INFO:root:Generator loss: 0.10286706689636683, Discriminator loss: 0.006685806550362455
+INFO:root:
+=== Epoch 4 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.9481,SSNR: 9.4465,CSIG: 4.4058,CBAK: 3.6063,COVL: 3.7437,STOI: 0.9482
+
+INFO:root:Epoch 5, Step 500, loss: 0.20441842079162598, disc_loss: 0.0022364489268511534
+INFO:root:Epoch 5, Step 1000, loss: 0.18128138780593872, disc_loss: 0.0016675445949658751
+INFO:root:Epoch 5, Step 1500, loss: 0.13930855691432953, disc_loss: 0.004301018081605434
+INFO:root:Epoch 5, Step 2000, loss: 0.13921046257019043, disc_loss: 0.009725173003971577
+INFO:root:Epoch 5, Step 2500, loss: 0.15714271366596222, disc_loss: 0.007469904609024525
+INFO:root:Generator loss: 0.09996398903646515, Discriminator loss: 0.007438379314090057
+INFO:root:
+=== Epoch 5 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.9880,SSNR: 9.4576,CSIG: 4.4451,CBAK: 3.6294,COVL: 3.7838,STOI: 0.9506
+
+INFO:root:Epoch 6, Step 500, loss: 0.1257629245519638, disc_loss: 0.007507122587412596
+INFO:root:Epoch 6, Step 1000, loss: 0.13630740344524384, disc_loss: 0.0009021680452860892
+INFO:root:Epoch 6, Step 1500, loss: 0.16077028214931488, disc_loss: 0.0004863305075559765
+INFO:root:Epoch 6, Step 2000, loss: 0.17345750331878662, disc_loss: 0.003436668310314417
+INFO:root:Epoch 6, Step 2500, loss: 0.13557368516921997, disc_loss: 0.0011268635280430317
+INFO:root:Generator loss: 0.09865826939784207, Discriminator loss: 0.008956092171784513
+INFO:root:
+=== Epoch 6 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.0907,SSNR: 9.4782,CSIG: 4.4823,CBAK: 3.6785,COVL: 3.8654,STOI: 0.9491
+
+INFO:root:Epoch 7, Step 500, loss: 0.1392436921596527, disc_loss: 0.0014486651634797454
+INFO:root:Epoch 7, Step 1000, loss: 0.16384294629096985, disc_loss: 0.002719366457313299
+INFO:root:Epoch 7, Step 1500, loss: 0.1476697027683258, disc_loss: 0.003750099102035165
+INFO:root:Epoch 7, Step 2000, loss: 0.10420452058315277, disc_loss: 0.004392936360090971
+INFO:root:Epoch 7, Step 2500, loss: 0.08152316510677338, disc_loss: 0.0026317937299609184
+INFO:root:Generator loss: 0.09040421493423795, Discriminator loss: 0.006277790754520361
+INFO:root:
+=== Epoch 7 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.1946,SSNR: 10.0688,CSIG: 4.5560,CBAK: 3.7694,COVL: 3.9603,STOI: 0.9519
+
+INFO:root:Epoch 8, Step 500, loss: 0.1083303838968277, disc_loss: 0.006396457552909851
+INFO:root:Epoch 8, Step 1000, loss: 0.13429021835327148, disc_loss: 0.004817391280084848
+INFO:root:Epoch 8, Step 1500, loss: 0.15818102657794952, disc_loss: 0.008263321593403816
+INFO:root:Epoch 8, Step 2000, loss: 0.1800362467765808, disc_loss: 0.0006758117233403027
+INFO:root:Epoch 8, Step 2500, loss: 0.14322617650032043, disc_loss: 0.0035026187542825937
+INFO:root:Generator loss: 0.09090775403293591, Discriminator loss: 0.007897692946200055
+INFO:root:
+=== Epoch 8 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.1825,SSNR: 9.9671,CSIG: 4.5502,CBAK: 3.7567,COVL: 3.9492,STOI: 0.9520
+
+INFO:root:Epoch 9, Step 500, loss: 0.1823969930410385, disc_loss: 0.0004065576649736613
+INFO:root:Epoch 9, Step 1000, loss: 0.16895967721939087, disc_loss: 0.0025750650092959404
+INFO:root:Epoch 9, Step 1500, loss: 0.12836886942386627, disc_loss: 0.0014691392425447702
+INFO:root:Epoch 9, Step 2000, loss: 0.1405533254146576, disc_loss: 0.006390661932528019
+INFO:root:Epoch 9, Step 2500, loss: 0.11117389798164368, disc_loss: 0.00048542473814450204
+INFO:root:Generator loss: 0.08861873922779144, Discriminator loss: 0.006396783264825749
+INFO:root:
+=== Epoch 9 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2254,SSNR: 10.1827,CSIG: 4.5647,CBAK: 3.7913,COVL: 3.9789,STOI: 0.9514
+
+INFO:root:Epoch 10, Step 500, loss: 0.09641561657190323, disc_loss: 0.0029729146044701338
+INFO:root:Epoch 10, Step 1000, loss: 0.12142406404018402, disc_loss: 0.0009899591095745564
+INFO:root:Epoch 10, Step 1500, loss: 0.12002038955688477, disc_loss: 0.000439531693700701
+INFO:root:Epoch 10, Step 2000, loss: 0.09214768558740616, disc_loss: 0.0011342462385073304
+INFO:root:Epoch 10, Step 2500, loss: 0.11700782179832458, disc_loss: 0.004264502320438623
+INFO:root:Generator loss: 0.08896813509099692, Discriminator loss: 0.005906755842552583
+INFO:root:
+=== Epoch 10 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2704,SSNR: 10.3643,CSIG: 4.5801,CBAK: 3.8249,COVL: 4.0093,STOI: 0.9519
+
+INFO:root:Epoch 11, Step 500, loss: 0.13431638479232788, disc_loss: 0.0008716327138245106
+INFO:root:Epoch 11, Step 1000, loss: 0.15192219614982605, disc_loss: 0.004516943357884884
+INFO:root:Epoch 11, Step 1500, loss: 0.12688016891479492, disc_loss: 0.00033253501169383526
+INFO:root:Epoch 11, Step 2000, loss: 0.15975773334503174, disc_loss: 0.003588896943256259
+INFO:root:Epoch 11, Step 2500, loss: 0.12702690064907074, disc_loss: 0.0021442801225930452
+INFO:root:Generator loss: 0.09085427318672532, Discriminator loss: 0.007350779158214121
+INFO:root:
+=== Epoch 11 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2800,SSNR: 10.0225,CSIG: 4.5599,CBAK: 3.8081,COVL: 4.0050,STOI: 0.9517
+
+INFO:root:Epoch 12, Step 500, loss: 0.16919708251953125, disc_loss: 0.0009442733717150986
+INFO:root:Epoch 12, Step 1000, loss: 0.14090022444725037, disc_loss: 0.0005982833681628108
+INFO:root:Epoch 12, Step 1500, loss: 0.15266285836696625, disc_loss: 0.0010965632973238826
+INFO:root:Epoch 12, Step 2000, loss: 0.11252716183662415, disc_loss: 0.001353137195110321
+INFO:root:Epoch 12, Step 2500, loss: 0.1167190819978714, disc_loss: 0.0031539397314190865
+INFO:root:Generator loss: 0.08925526809779186, Discriminator loss: 0.005488926064360376
+INFO:root:
+=== Epoch 12 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2005,SSNR: 9.9902,CSIG: 4.6049,CBAK: 3.7675,COVL: 3.9879,STOI: 0.9540
+
+INFO:root:Epoch 13, Step 500, loss: 0.12734127044677734, disc_loss: 0.00030298088677227497
+INFO:root:Epoch 13, Step 1000, loss: 0.19856372475624084, disc_loss: 0.001493898336775601
+INFO:root:Epoch 13, Step 1500, loss: 0.060834500938653946, disc_loss: 0.0017425821861252189
+INFO:root:Epoch 13, Step 2000, loss: 0.1107330471277237, disc_loss: 0.003230760572478175
+INFO:root:Epoch 13, Step 2500, loss: 0.09886153042316437, disc_loss: 0.0016723191365599632
+INFO:root:Generator loss: 0.08809619346289958, Discriminator loss: 0.007236765145190801
+INFO:root:
+=== Epoch 13 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2600,SSNR: 10.0397,CSIG: 4.6287,CBAK: 3.7996,COVL: 4.0379,STOI: 0.9539
+
+INFO:root:Epoch 14, Step 500, loss: 0.09475013613700867, disc_loss: 0.0011217368301004171
+INFO:root:Epoch 14, Step 1000, loss: 0.14867056906223297, disc_loss: 0.0004577632644213736
+INFO:root:Epoch 14, Step 1500, loss: 0.12175695598125458, disc_loss: 0.001817842829041183
+INFO:root:Epoch 14, Step 2000, loss: 0.15556323528289795, disc_loss: 0.00018108406220562756
+INFO:root:Epoch 14, Step 2500, loss: 0.13807590305805206, disc_loss: 0.00044285922194831073
+INFO:root:Generator loss: 0.09023271300332639, Discriminator loss: 0.00874806168654174
+INFO:root:
+=== Epoch 14 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2259,SSNR: 9.8848,CSIG: 4.6087,CBAK: 3.7710,COVL: 4.0024,STOI: 0.9547
+
+INFO:root:Epoch 15, Step 500, loss: 0.1114368736743927, disc_loss: 0.0021613482385873795
+INFO:root:Epoch 15, Step 1000, loss: 0.12887835502624512, disc_loss: 0.0013846862129867077
+INFO:root:Epoch 15, Step 1500, loss: 0.08552493155002594, disc_loss: 0.0019550358410924673
+INFO:root:Epoch 15, Step 2000, loss: 0.17682354152202606, disc_loss: 0.012976573780179024
+INFO:root:Epoch 15, Step 2500, loss: 0.11824624985456467, disc_loss: 0.004026937298476696
+INFO:root:Generator loss: 0.08856624558350994, Discriminator loss: 0.0057076049513817605
+INFO:root:
+=== Epoch 15 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2223,SSNR: 10.2501,CSIG: 4.6076,CBAK: 3.7952,COVL: 4.0036,STOI: 0.9539
+
+INFO:root:Epoch 16, Step 500, loss: 0.13611645996570587, disc_loss: 0.0015632826834917068
+INFO:root:Epoch 16, Step 1000, loss: 0.13621917366981506, disc_loss: 0.0034148413687944412
+INFO:root:Epoch 16, Step 1500, loss: 0.10049432516098022, disc_loss: 0.0041094254702329636
+INFO:root:Epoch 16, Step 2000, loss: 0.1110658198595047, disc_loss: 0.0021534846164286137
+INFO:root:Epoch 16, Step 2500, loss: 0.09676051884889603, disc_loss: 0.002451299922540784
+INFO:root:Generator loss: 0.0889668558877938, Discriminator loss: 0.005710453500372733
+INFO:root:
+=== Epoch 16 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2373,SSNR: 10.2336,CSIG: 4.6075,CBAK: 3.7974,COVL: 4.0067,STOI: 0.9553
+
+INFO:root:Epoch 17, Step 500, loss: 0.11535988748073578, disc_loss: 0.0013781688176095486
+INFO:root:Epoch 17, Step 1000, loss: 0.12584464251995087, disc_loss: 0.0009419832495041192
+INFO:root:Epoch 17, Step 1500, loss: 0.11752863228321075, disc_loss: 0.0061623938381671906
+INFO:root:Epoch 17, Step 2000, loss: 0.06668726354837418, disc_loss: 0.0016347920754924417
+INFO:root:Epoch 17, Step 2500, loss: 0.152571439743042, disc_loss: 0.00048738010809756815
+INFO:root:Generator loss: 0.0868317145781899, Discriminator loss: 0.005978968521463967
+INFO:root:
+=== Epoch 17 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2675,SSNR: 10.3726,CSIG: 4.6213,CBAK: 3.8245,COVL: 4.0353,STOI: 0.9545
+
+INFO:root:Epoch 18, Step 500, loss: 0.12702806293964386, disc_loss: 0.0021506936755031347
+INFO:root:Epoch 18, Step 1000, loss: 0.1407739818096161, disc_loss: 0.0016190538881346583
+INFO:root:Epoch 18, Step 1500, loss: 0.07544779777526855, disc_loss: 0.004905211739242077
+INFO:root:Epoch 18, Step 2000, loss: 0.09567443281412125, disc_loss: 0.0002952205832116306
+INFO:root:Epoch 18, Step 2500, loss: 0.14882506430149078, disc_loss: 0.000821531459223479
+INFO:root:Generator loss: 0.08824830849483176, Discriminator loss: 0.006295258343422212
+INFO:root:
+=== Epoch 18 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2673,SSNR: 10.1562,CSIG: 4.6192,CBAK: 3.8101,COVL: 4.0346,STOI: 0.9537
+
+INFO:root:Epoch 19, Step 500, loss: 0.1383204609155655, disc_loss: 0.0007321382290683687
+INFO:root:Epoch 19, Step 1000, loss: 0.12796814739704132, disc_loss: 0.003618190297856927
+INFO:root:Epoch 19, Step 1500, loss: 0.15449261665344238, disc_loss: 0.0028504584915935993
+INFO:root:Epoch 19, Step 2000, loss: 0.11939047276973724, disc_loss: 0.0028919416945427656
+INFO:root:Epoch 19, Step 2500, loss: 0.15101014077663422, disc_loss: 0.0012591611593961716
+INFO:root:Generator loss: 0.08642821339438263, Discriminator loss: 0.007117951528846444
+INFO:root:
+=== Epoch 19 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2842,SSNR: 10.1839,CSIG: 4.6391,CBAK: 3.8204,COVL: 4.0529,STOI: 0.9550
+
+INFO:root:Epoch 20, Step 500, loss: 0.11723893880844116, disc_loss: 0.0029548965394496918
+INFO:root:Epoch 20, Step 1000, loss: 0.13340437412261963, disc_loss: 0.0006810936611145735
+INFO:root:Epoch 20, Step 1500, loss: 0.12784285843372345, disc_loss: 0.07710650563240051
+INFO:root:Epoch 20, Step 2000, loss: 0.13378748297691345, disc_loss: 0.0005648051155731082
+INFO:root:Epoch 20, Step 2500, loss: 0.10170876979827881, disc_loss: 0.003243417711928487
+INFO:root:Generator loss: 0.08590688147735827, Discriminator loss: 0.005650573802871875
+INFO:root:
+=== Epoch 20 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2872,SSNR: 10.5104,CSIG: 4.6277,CBAK: 3.8431,COVL: 4.0514,STOI: 0.9549
+
+INFO:root:Epoch 21, Step 500, loss: 0.14849042892456055, disc_loss: 0.0012649210402742028
+INFO:root:Epoch 21, Step 1000, loss: 0.13488465547561646, disc_loss: 0.004081884864717722
+INFO:root:Epoch 21, Step 1500, loss: 0.1089792400598526, disc_loss: 0.001143784262239933
+INFO:root:Epoch 21, Step 2000, loss: 0.17981606721878052, disc_loss: 0.0014921700349077582
+INFO:root:Epoch 21, Step 2500, loss: 0.06302493065595627, disc_loss: 0.005904998630285263
+INFO:root:Generator loss: 0.09006173738721505, Discriminator loss: 0.006748773095962869
+INFO:root:
+=== Epoch 21 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2552,SSNR: 10.0295,CSIG: 4.6042,CBAK: 3.7927,COVL: 4.0261,STOI: 0.9545
+
+INFO:root:Epoch 22, Step 500, loss: 0.09277017414569855, disc_loss: 0.0033637864980846643
+INFO:root:Epoch 22, Step 1000, loss: 0.11390455067157745, disc_loss: 0.0010407078079879284
+INFO:root:Epoch 22, Step 1500, loss: 0.13120724260807037, disc_loss: 0.0010855203727260232
+INFO:root:Epoch 22, Step 2000, loss: 0.1261882483959198, disc_loss: 0.0014349467819556594
+INFO:root:Epoch 22, Step 2500, loss: 0.1146075502038002, disc_loss: 0.0017218117136508226
+INFO:root:Generator loss: 0.08874008252999736, Discriminator loss: 0.006171237284434028
+INFO:root:
+=== Epoch 22 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.1946,SSNR: 10.4652,CSIG: 4.5784,CBAK: 3.7958,COVL: 3.9685,STOI: 0.9552
+
+INFO:root:Epoch 23, Step 500, loss: 0.06280754506587982, disc_loss: 0.0011816214537248015
+INFO:root:Epoch 23, Step 1000, loss: 0.15325742959976196, disc_loss: 0.0039986250922083855
+INFO:root:Epoch 23, Step 1500, loss: 0.11435720324516296, disc_loss: 0.006584318820387125
+INFO:root:Epoch 23, Step 2000, loss: 0.19089704751968384, disc_loss: 0.0009871079819276929
+INFO:root:Epoch 23, Step 2500, loss: 0.14603713154792786, disc_loss: 0.0006251533632166684
+INFO:root:Generator loss: 0.08628890685086112, Discriminator loss: 0.00817733981691242
+INFO:root:
+=== Epoch 23 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2664,SSNR: 10.3367,CSIG: 4.6298,CBAK: 3.8215,COVL: 4.0381,STOI: 0.9553
+
+INFO:root:Epoch 24, Step 500, loss: 0.15328870713710785, disc_loss: 0.0015902095474302769
+INFO:root:Epoch 24, Step 1000, loss: 0.1047462671995163, disc_loss: 0.0005573061644099653
+INFO:root:Epoch 24, Step 1500, loss: 0.1003224328160286, disc_loss: 0.00408213771879673
+INFO:root:Epoch 24, Step 2000, loss: 0.16099846363067627, disc_loss: 0.0015285105910152197
+INFO:root:Epoch 24, Step 2500, loss: 0.13056199252605438, disc_loss: 0.0008873079787008464
+INFO:root:Generator loss: 0.08668979470735615, Discriminator loss: 0.005829763448823586
+INFO:root:
+=== Epoch 24 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2738,SSNR: 10.2797,CSIG: 4.6277,CBAK: 3.8200,COVL: 4.0432,STOI: 0.9555
+
+INFO:root:Epoch 25, Step 500, loss: 0.11909402161836624, disc_loss: 0.0002469928876962513
+INFO:root:Epoch 25, Step 1000, loss: 0.07737314701080322, disc_loss: 0.07876928150653839
+INFO:root:Epoch 25, Step 1500, loss: 0.1589900702238083, disc_loss: 0.00041655381210148335
+INFO:root:Epoch 25, Step 2000, loss: 0.07910608500242233, disc_loss: 0.004648244008421898
+INFO:root:Epoch 25, Step 2500, loss: 0.11772026121616364, disc_loss: 0.00193763617426157
+INFO:root:Generator loss: 0.0841266255536415, Discriminator loss: 0.005006230890182795
+INFO:root:
+=== Epoch 25 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3191,SSNR: 10.5794,CSIG: 4.6574,CBAK: 3.8633,COVL: 4.0829,STOI: 0.9555
+
+INFO:root:Epoch 26, Step 500, loss: 0.09460687637329102, disc_loss: 0.0006422940641641617
+INFO:root:Epoch 26, Step 1000, loss: 0.07976676523685455, disc_loss: 0.0007952933083288372
+INFO:root:Epoch 26, Step 1500, loss: 0.10138051956892014, disc_loss: 0.0011155299143865705
+INFO:root:Epoch 26, Step 2000, loss: 0.12272002547979355, disc_loss: 0.0021852327045053244
+INFO:root:Epoch 26, Step 2500, loss: 0.14596867561340332, disc_loss: 0.0029875156469643116
+INFO:root:Generator loss: 0.08441065674991284, Discriminator loss: 0.00589953503782736
+INFO:root:
+=== Epoch 26 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2822,SSNR: 10.5153,CSIG: 4.6492,CBAK: 3.8413,COVL: 4.0546,STOI: 0.9563
+
+INFO:root:Epoch 27, Step 500, loss: 0.15398286283016205, disc_loss: 0.001454586978070438
+INFO:root:Epoch 27, Step 1000, loss: 0.16125085949897766, disc_loss: 0.003257744014263153
+INFO:root:Epoch 27, Step 1500, loss: 0.11880375444889069, disc_loss: 0.0032287081703543663
+INFO:root:Epoch 27, Step 2000, loss: 0.18712864816188812, disc_loss: 0.0017779117915779352
+INFO:root:Epoch 27, Step 2500, loss: 0.09946286678314209, disc_loss: 0.00020205779583193362
+INFO:root:Generator loss: 0.0844047245867912, Discriminator loss: 0.00619471112454934
+INFO:root:
+=== Epoch 27 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3169,SSNR: 10.4471,CSIG: 4.6527,CBAK: 3.8524,COVL: 4.0815,STOI: 0.9555
+
+INFO:root:Epoch 28, Step 500, loss: 0.13620401918888092, disc_loss: 0.002758825197815895
+INFO:root:Epoch 28, Step 1000, loss: 0.1179737001657486, disc_loss: 0.0010245866142213345
+INFO:root:Epoch 28, Step 1500, loss: 0.14761905372142792, disc_loss: 0.0016011650441214442
+INFO:root:Epoch 28, Step 2000, loss: 0.11626645922660828, disc_loss: 0.0024115191772580147
+INFO:root:Epoch 28, Step 2500, loss: 0.12497822940349579, disc_loss: 0.0012697480851784348
+INFO:root:Generator loss: 0.08508086586099806, Discriminator loss: 0.0061515346127793925
+INFO:root:
+=== Epoch 28 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3330,SSNR: 10.3323,CSIG: 4.6614,CBAK: 3.8518,COVL: 4.0936,STOI: 0.9556
+
+INFO:root:Epoch 29, Step 500, loss: 0.14597150683403015, disc_loss: 0.0010773984249681234
+INFO:root:Epoch 29, Step 1000, loss: 0.12616616487503052, disc_loss: 0.00025965645909309387
+INFO:root:Epoch 29, Step 1500, loss: 0.12671545147895813, disc_loss: 0.0006834320374764502
+INFO:root:Epoch 29, Step 2000, loss: 0.11952036619186401, disc_loss: 0.0024137471336871386
+INFO:root:Epoch 29, Step 2500, loss: 0.11310744285583496, disc_loss: 0.0023771070409566164
+INFO:root:Generator loss: 0.08758773499177498, Discriminator loss: 0.008326161546878194
+INFO:root:
+=== Epoch 29 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2777,SSNR: 9.9223,CSIG: 4.6317,CBAK: 3.7971,COVL: 4.0510,STOI: 0.9555
+
+INFO:root:Epoch 30, Step 500, loss: 0.17490792274475098, disc_loss: 0.002406657673418522
+INFO:root:Epoch 30, Step 1000, loss: 0.18165235221385956, disc_loss: 0.010066857561469078
+INFO:root:Epoch 30, Step 1500, loss: 0.11799763143062592, disc_loss: 0.0016474708681926131
+INFO:root:Epoch 30, Step 2000, loss: 0.1347375363111496, disc_loss: 0.0009473023237660527
+INFO:root:Epoch 30, Step 2500, loss: 0.1103651225566864, disc_loss: 0.0011590981157496572
+INFO:root:Generator loss: 0.08432182689531914, Discriminator loss: 0.007256912967914634
+INFO:root:
+=== Epoch 30 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3161,SSNR: 10.2654,CSIG: 4.6511,CBAK: 3.8407,COVL: 4.0802,STOI: 0.9556
+
+INFO:root:Epoch 31, Step 500, loss: 0.09219175577163696, disc_loss: 0.0022559077478945255
+INFO:root:Epoch 31, Step 1000, loss: 0.16277843713760376, disc_loss: 0.0015457585686817765
+INFO:root:Epoch 31, Step 1500, loss: 0.110347680747509, disc_loss: 0.0006054959376342595
+INFO:root:Epoch 31, Step 2000, loss: 0.11687543988227844, disc_loss: 0.00288566411472857
+INFO:root:Epoch 31, Step 2500, loss: 0.05010451376438141, disc_loss: 0.00044478560448624194
+INFO:root:Generator loss: 0.08467562024671475, Discriminator loss: 0.005893935275186945
+INFO:root:
+=== Epoch 31 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3209,SSNR: 10.4455,CSIG: 4.6495,CBAK: 3.8542,COVL: 4.0806,STOI: 0.9563
+
+INFO:root:Epoch 32, Step 500, loss: 0.11909192055463791, disc_loss: 0.0028046180959790945
+INFO:root:Epoch 32, Step 1000, loss: 0.11583398282527924, disc_loss: 0.10657703876495361
+INFO:root:Epoch 32, Step 1500, loss: 0.08550314605236053, disc_loss: 0.00042107145418412983
+INFO:root:Epoch 32, Step 2000, loss: 0.0802706778049469, disc_loss: 0.0004130164161324501
+INFO:root:Epoch 32, Step 2500, loss: 0.118782639503479, disc_loss: 0.0024549246300011873
+INFO:root:Generator loss: 0.08339655808019407, Discriminator loss: 0.00455725247243694
+INFO:root:
+=== Epoch 32 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3320,SSNR: 10.7001,CSIG: 4.6460,CBAK: 3.8771,COVL: 4.0833,STOI: 0.9562
+
+INFO:root:Epoch 33, Step 500, loss: 0.09370239824056625, disc_loss: 0.0007384950295090675
+INFO:root:Epoch 33, Step 1000, loss: 0.11040947586297989, disc_loss: 0.0016599532682448626
+INFO:root:Epoch 33, Step 1500, loss: 0.15158489346504211, disc_loss: 0.002490998012945056
+INFO:root:Epoch 33, Step 2000, loss: 0.14319956302642822, disc_loss: 0.003970204386860132
+INFO:root:Epoch 33, Step 2500, loss: 0.061039358377456665, disc_loss: 0.0015151501866057515
+INFO:root:Generator loss: 0.08374681057932887, Discriminator loss: 0.0070551539561739506
+INFO:root:
+=== Epoch 33 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3300,SSNR: 10.3425,CSIG: 4.6628,CBAK: 3.8526,COVL: 4.0953,STOI: 0.9557
+
+INFO:root:Epoch 34, Step 500, loss: 0.0626479834318161, disc_loss: 0.0001933398743858561
+INFO:root:Epoch 34, Step 1000, loss: 0.10775932669639587, disc_loss: 0.0029181477148085833
+INFO:root:Epoch 34, Step 1500, loss: 0.13782107830047607, disc_loss: 0.0017738681053742766
+INFO:root:Epoch 34, Step 2000, loss: 0.09827597439289093, disc_loss: 0.000413125118939206
+INFO:root:Epoch 34, Step 2500, loss: 0.12970733642578125, disc_loss: 0.0006508995429612696
+INFO:root:Generator loss: 0.08513548997348373, Discriminator loss: 0.0055043843331783774
+INFO:root:
+=== Epoch 34 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3162,SSNR: 10.4516,CSIG: 4.6377,CBAK: 3.8522,COVL: 4.0714,STOI: 0.9553
+
+INFO:root:Epoch 35, Step 500, loss: 0.08930493891239166, disc_loss: 0.00037006131606176496
+INFO:root:Epoch 35, Step 1000, loss: 0.06275050342082977, disc_loss: 0.0021035715471953154
+INFO:root:Epoch 35, Step 1500, loss: 0.15647056698799133, disc_loss: 0.0018152660923078656
+INFO:root:Epoch 35, Step 2000, loss: 0.13561414182186127, disc_loss: 0.0008354002493433654
+INFO:root:Epoch 35, Step 2500, loss: 0.1823413372039795, disc_loss: 0.0018602525815367699
+INFO:root:Generator loss: 0.08398668900204515, Discriminator loss: 0.00808171194106215
+INFO:root:
+=== Epoch 35 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3296,SSNR: 10.5524,CSIG: 4.6498,CBAK: 3.8667,COVL: 4.0861,STOI: 0.9556
+
+INFO:root:Epoch 36, Step 500, loss: 0.09621739387512207, disc_loss: 0.00016577792121097445
+INFO:root:Epoch 36, Step 1000, loss: 0.08163484185934067, disc_loss: 0.0008638664148747921
+INFO:root:Epoch 36, Step 1500, loss: 0.1556759476661682, disc_loss: 0.0005044317222200334
+INFO:root:Epoch 36, Step 2000, loss: 0.09718748182058334, disc_loss: 0.0007686400203965604
+INFO:root:Epoch 36, Step 2500, loss: 0.09952237457036972, disc_loss: 0.001672546612098813
+INFO:root:Generator loss: 0.0839062764227969, Discriminator loss: 0.0051535039837669935
+INFO:root:
+=== Epoch 36 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3361,SSNR: 10.6142,CSIG: 4.6631,CBAK: 3.8720,COVL: 4.0966,STOI: 0.9561
+
+INFO:root:Epoch 37, Step 500, loss: 0.13243092596530914, disc_loss: 0.0017960777040570974
+INFO:root:Epoch 37, Step 1000, loss: 0.11766346544027328, disc_loss: 0.0011391431326046586
+INFO:root:Epoch 37, Step 1500, loss: 0.11777462065219879, disc_loss: 0.0005037802620790899
+INFO:root:Epoch 37, Step 2000, loss: 0.10092999041080475, disc_loss: 0.023083161562681198
+INFO:root:Epoch 37, Step 2500, loss: 0.1031837910413742, disc_loss: 0.0005591940134763718
+INFO:root:Generator loss: 0.08441348818754688, Discriminator loss: 0.005262265217133619
+INFO:root:
+=== Epoch 37 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3330,SSNR: 10.3819,CSIG: 4.6648,CBAK: 3.8559,COVL: 4.0967,STOI: 0.9560
+
+INFO:root:Epoch 38, Step 500, loss: 0.07704953849315643, disc_loss: 0.0007265305612236261
+INFO:root:Epoch 38, Step 1000, loss: 0.08076351881027222, disc_loss: 0.00453066173940897
+INFO:root:Epoch 38, Step 1500, loss: 0.07134579122066498, disc_loss: 0.0010395069839432836
+INFO:root:Epoch 38, Step 2000, loss: 0.11578516662120819, disc_loss: 0.00025064617511816323
+INFO:root:Epoch 38, Step 2500, loss: 0.10778703540563583, disc_loss: 0.0011497357627376914
+INFO:root:Generator loss: 0.0845230716343933, Discriminator loss: 0.005764142308533655
+INFO:root:
+=== Epoch 38 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3445,SSNR: 10.3118,CSIG: 4.6626,CBAK: 3.8573,COVL: 4.1058,STOI: 0.9559
+
+INFO:root:Epoch 39, Step 500, loss: 0.10633079707622528, disc_loss: 0.0012575205182656646
+INFO:root:Epoch 39, Step 1000, loss: 0.08708365261554718, disc_loss: 0.002729456638917327
+INFO:root:Epoch 39, Step 1500, loss: 0.11079175770282745, disc_loss: 0.0028454563580453396
+INFO:root:Epoch 39, Step 2000, loss: 0.06278936564922333, disc_loss: 0.00027744294493459165
+INFO:root:Epoch 39, Step 2500, loss: 0.09875264763832092, disc_loss: 0.00022104794334154576
+INFO:root:Generator loss: 0.08384243449539815, Discriminator loss: 0.00703002080892245
+INFO:root:
+=== Epoch 39 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.2943,SSNR: 10.5611,CSIG: 4.6393,CBAK: 3.8493,COVL: 4.0612,STOI: 0.9561
+
+INFO:root:Epoch 40, Step 500, loss: 0.13554951548576355, disc_loss: 0.0015361603582277894
+INFO:root:Epoch 40, Step 1000, loss: 0.08887440711259842, disc_loss: 0.0003357701643835753
+INFO:root:Epoch 40, Step 1500, loss: 0.14631623029708862, disc_loss: 0.0004955566255375743
+INFO:root:Epoch 40, Step 2000, loss: 0.10297726094722748, disc_loss: 0.0015914352843537927
+INFO:root:Epoch 40, Step 2500, loss: 0.10023382306098938, disc_loss: 0.0005556780379265547
+INFO:root:Generator loss: 0.08441032559692281, Discriminator loss: 0.005535894499860537
+INFO:root:
+=== Epoch 40 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3242,SSNR: 10.3719,CSIG: 4.6575,CBAK: 3.8512,COVL: 4.0901,STOI: 0.9557
+
+INFO:root:Epoch 41, Step 500, loss: 0.06363800913095474, disc_loss: 0.0021801721304655075
+INFO:root:Epoch 41, Step 1000, loss: 0.11881749331951141, disc_loss: 0.0008744377410039306
+INFO:root:Epoch 41, Step 1500, loss: 0.10245539993047714, disc_loss: 0.0004141240497119725
+INFO:root:Epoch 41, Step 2000, loss: 0.15097227692604065, disc_loss: 0.0008759284391999245
+INFO:root:Epoch 41, Step 2500, loss: 0.08979910612106323, disc_loss: 0.001734981662593782
+INFO:root:Generator loss: 0.0827370396661527, Discriminator loss: 0.006671863543814855
+INFO:root:
+=== Epoch 41 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3317,SSNR: 10.4659,CSIG: 4.6604,CBAK: 3.8618,COVL: 4.0950,STOI: 0.9562
+
+INFO:root:Epoch 42, Step 500, loss: 0.11668193340301514, disc_loss: 0.0030675027519464493
+INFO:root:Epoch 42, Step 1000, loss: 0.08339396864175797, disc_loss: 0.0016876538284122944
+INFO:root:Epoch 42, Step 1500, loss: 0.08880207687616348, disc_loss: 0.002995722694322467
+INFO:root:Epoch 42, Step 2000, loss: 0.11473208665847778, disc_loss: 0.0010125715052708983
+INFO:root:Epoch 42, Step 2500, loss: 0.1389227658510208, disc_loss: 0.0005377202178351581
+INFO:root:Generator loss: 0.08361104376686429, Discriminator loss: 0.006215603004818052
+INFO:root:
+=== Epoch 42 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3297,SSNR: 10.4837,CSIG: 4.6579,CBAK: 3.8616,COVL: 4.0914,STOI: 0.9567
+
+INFO:root:Epoch 43, Step 500, loss: 0.09046083688735962, disc_loss: 0.0007938497583381832
+INFO:root:Epoch 43, Step 1000, loss: 0.07806151360273361, disc_loss: 0.001055138069204986
+INFO:root:Epoch 43, Step 1500, loss: 0.12316390872001648, disc_loss: 0.0014351863646879792
+INFO:root:Epoch 43, Step 2000, loss: 0.09597213566303253, disc_loss: 0.05503752827644348
+INFO:root:Epoch 43, Step 2500, loss: 0.16143734753131866, disc_loss: 0.0006513127591460943
+INFO:root:Generator loss: 0.08502157770314263, Discriminator loss: 0.007001182125623901
+INFO:root:
+=== Epoch 43 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3203,SSNR: 10.2850,CSIG: 4.6558,CBAK: 3.8433,COVL: 4.0851,STOI: 0.9562
+
+INFO:root:Epoch 44, Step 500, loss: 0.12391850352287292, disc_loss: 0.03694818541407585
+INFO:root:Epoch 44, Step 1000, loss: 0.1785656064748764, disc_loss: 0.0009398529655300081
+INFO:root:Epoch 44, Step 1500, loss: 0.1080131083726883, disc_loss: 0.0013521009823307395
+INFO:root:Epoch 44, Step 2000, loss: 0.13333499431610107, disc_loss: 0.0014088558964431286
+INFO:root:Epoch 44, Step 2500, loss: 0.15153110027313232, disc_loss: 0.0008631545933894813
+INFO:root:Generator loss: 0.08386771181978069, Discriminator loss: 0.007602146849995796
+INFO:root:
+=== Epoch 44 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3533,SSNR: 10.3878,CSIG: 4.6582,CBAK: 3.8649,COVL: 4.1043,STOI: 0.9561
+
+INFO:root:Epoch 45, Step 500, loss: 0.07135448604822159, disc_loss: 0.000910295988433063
+INFO:root:Epoch 45, Step 1000, loss: 0.10403530299663544, disc_loss: 0.0011528494069352746
+INFO:root:Epoch 45, Step 1500, loss: 0.11874901503324509, disc_loss: 0.0010202518897131085
+INFO:root:Epoch 45, Step 2000, loss: 0.1005779355764389, disc_loss: 0.0003817994729615748
+INFO:root:Epoch 45, Step 2500, loss: 0.12462387979030609, disc_loss: 0.00015201731002889574
+INFO:root:Generator loss: 0.08425420475671593, Discriminator loss: 0.0062747752498518855
+INFO:root:
+=== Epoch 45 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3196,SSNR: 10.5267,CSIG: 4.6497,CBAK: 3.8590,COVL: 4.0821,STOI: 0.9563
+
+INFO:root:Epoch 46, Step 500, loss: 0.14015570282936096, disc_loss: 0.003710774937644601
+INFO:root:Epoch 46, Step 1000, loss: 0.09718603640794754, disc_loss: 0.0005424859700724483
+INFO:root:Epoch 46, Step 1500, loss: 0.15315929055213928, disc_loss: 0.0005794253665953875
+INFO:root:Epoch 46, Step 2000, loss: 0.09091588109731674, disc_loss: 0.0021441690623760223
+INFO:root:Epoch 46, Step 2500, loss: 0.09894942492246628, disc_loss: 4.080310100107454e-05
+INFO:root:Generator loss: 0.08406105794880575, Discriminator loss: 0.004750610278455656
+INFO:root:
+=== Epoch 46 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3329,SSNR: 10.3845,CSIG: 4.6626,CBAK: 3.8548,COVL: 4.0979,STOI: 0.9563
+
+INFO:root:Epoch 47, Step 500, loss: 0.11736151576042175, disc_loss: 0.000324646825902164
+INFO:root:Epoch 47, Step 1000, loss: 0.0847102478146553, disc_loss: 0.0004027991381008178
+INFO:root:Epoch 47, Step 1500, loss: 0.14256222546100616, disc_loss: 0.002287905663251877
+INFO:root:Epoch 47, Step 2000, loss: 0.16155141592025757, disc_loss: 0.0007635008660145104
+INFO:root:Epoch 47, Step 2500, loss: 0.13296794891357422, disc_loss: 0.0007455417071469128
+INFO:root:Generator loss: 0.0836831758033882, Discriminator loss: 0.0071093766336629925
+INFO:root:
+=== Epoch 47 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3318,SSNR: 10.5195,CSIG: 4.6600,CBAK: 3.8646,COVL: 4.0959,STOI: 0.9563
+
+INFO:root:Epoch 48, Step 500, loss: 0.10261399298906326, disc_loss: 0.0002437391085550189
+INFO:root:Epoch 48, Step 1000, loss: 0.16949757933616638, disc_loss: 0.0038942245300859213
+INFO:root:Epoch 48, Step 1500, loss: 0.08231920003890991, disc_loss: 0.00042004292481578887
+INFO:root:Epoch 48, Step 2000, loss: 0.1401822566986084, disc_loss: 0.0016302572330459952
+INFO:root:Epoch 48, Step 2500, loss: 0.13504068553447723, disc_loss: 0.0009449877543374896
+INFO:root:Generator loss: 0.08327104923432892, Discriminator loss: 0.005956784192332051
+INFO:root:
+=== Epoch 48 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3307,SSNR: 10.4959,CSIG: 4.6659,CBAK: 3.8629,COVL: 4.0968,STOI: 0.9564
+
+INFO:root:Epoch 49, Step 500, loss: 0.1142820343375206, disc_loss: 0.0010018154280260205
+INFO:root:Epoch 49, Step 1000, loss: 0.11413963884115219, disc_loss: 0.0005503069842234254
+INFO:root:Epoch 49, Step 1500, loss: 0.12246224284172058, disc_loss: 0.0012586669763550162
+INFO:root:Epoch 49, Step 2000, loss: 0.10044047981500626, disc_loss: 0.00034684111597016454
+INFO:root:Epoch 49, Step 2500, loss: 0.13537976145744324, disc_loss: 0.001263208920136094
+INFO:root:Generator loss: 0.08424241215135288, Discriminator loss: 0.006569711755307332
+INFO:root:
+=== Epoch 49 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3305,SSNR: 10.3776,CSIG: 4.6602,CBAK: 3.8549,COVL: 4.0937,STOI: 0.9563
+
+INFO:root:Epoch 50, Step 500, loss: 0.13317959010601044, disc_loss: 0.00024006888270378113
+INFO:root:Epoch 50, Step 1000, loss: 0.07875634729862213, disc_loss: 0.0035919188521802425
+INFO:root:Epoch 50, Step 1500, loss: 0.09767843782901764, disc_loss: 0.0011839077342301607
+INFO:root:Epoch 50, Step 2000, loss: 0.09629587829113007, disc_loss: 0.0015751501778140664
+INFO:root:Epoch 50, Step 2500, loss: 0.10662756115198135, disc_loss: 0.0014972143108025193
+INFO:root:Generator loss: 0.08373474752874051, Discriminator loss: 0.0063140820506287654
+INFO:root:
+=== Epoch 50 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3371,SSNR: 10.4571,CSIG: 4.6603,CBAK: 3.8630,COVL: 4.0975,STOI: 0.9564
+
+INFO:root:Epoch 51, Step 500, loss: 0.06156320124864578, disc_loss: 0.0006578161846846342
+INFO:root:Epoch 51, Step 1000, loss: 0.11410319805145264, disc_loss: 0.0012275305343791842
+INFO:root:Epoch 51, Step 1500, loss: 0.0877714455127716, disc_loss: 0.0022822762839496136
+INFO:root:Epoch 51, Step 2000, loss: 0.09460386633872986, disc_loss: 0.0008473406778648496
+INFO:root:Epoch 51, Step 2500, loss: 0.11583410203456879, disc_loss: 0.0004655956581700593
+INFO:root:Generator loss: 0.08255214254977633, Discriminator loss: 0.0068465550863497674
+INFO:root:
+=== Epoch 51 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3417,SSNR: 10.5950,CSIG: 4.6593,CBAK: 3.8740,COVL: 4.0995,STOI: 0.9562
+
+INFO:root:Epoch 52, Step 500, loss: 0.10856986045837402, disc_loss: 0.0005442846450023353
+INFO:root:Epoch 52, Step 1000, loss: 0.12624135613441467, disc_loss: 0.0017006919952109456
+INFO:root:Epoch 52, Step 1500, loss: 0.1184098944067955, disc_loss: 0.00043289459426887333
+INFO:root:Epoch 52, Step 2000, loss: 0.08493532240390778, disc_loss: 0.00024964235490188
+INFO:root:Epoch 52, Step 2500, loss: 0.0993405282497406, disc_loss: 0.00012873060768470168
+INFO:root:Generator loss: 0.08250430463225518, Discriminator loss: 0.005387318730463095
+INFO:root:
+=== Epoch 52 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3401,SSNR: 10.5655,CSIG: 4.6656,CBAK: 3.8721,COVL: 4.1020,STOI: 0.9562
+
+INFO:root:Epoch 53, Step 500, loss: 0.11503294855356216, disc_loss: 0.0028729720506817102
+INFO:root:Epoch 53, Step 1000, loss: 0.14024975895881653, disc_loss: 0.0014817493502050638
+INFO:root:Epoch 53, Step 1500, loss: 0.09677107632160187, disc_loss: 0.0011468083830550313
+INFO:root:Epoch 53, Step 2000, loss: 0.11952857673168182, disc_loss: 0.0001786962093319744
+INFO:root:Epoch 53, Step 2500, loss: 0.15180347859859467, disc_loss: 0.0005484310677275062
+INFO:root:Generator loss: 0.08268382150715994, Discriminator loss: 0.0046919116009907225
+INFO:root:
+=== Epoch 53 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3441,SSNR: 10.5108,CSIG: 4.6705,CBAK: 3.8706,COVL: 4.1067,STOI: 0.9566
+
+INFO:root:Epoch 54, Step 500, loss: 0.11926352977752686, disc_loss: 0.001059059053659439
+INFO:root:Epoch 54, Step 1000, loss: 0.13465647399425507, disc_loss: 0.0001956313062692061
+INFO:root:Epoch 54, Step 1500, loss: 0.08800715953111649, disc_loss: 0.000622881343588233
+INFO:root:Epoch 54, Step 2000, loss: 0.12202786654233932, disc_loss: 0.0025031627155840397
+INFO:root:Epoch 54, Step 2500, loss: 0.11736804246902466, disc_loss: 0.0007425807998515666
+INFO:root:Generator loss: 0.08264615048554916, Discriminator loss: 0.006745540287579609
+INFO:root:
+=== Epoch 54 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3217,SSNR: 10.5608,CSIG: 4.6611,CBAK: 3.8625,COVL: 4.0875,STOI: 0.9566
+
+INFO:root:Epoch 55, Step 500, loss: 0.1067945584654808, disc_loss: 0.0007599092787131667
+INFO:root:Epoch 55, Step 1000, loss: 0.13921737670898438, disc_loss: 0.00047534331679344177
+INFO:root:Epoch 55, Step 1500, loss: 0.13404694199562073, disc_loss: 0.001041258918121457
+INFO:root:Epoch 55, Step 2000, loss: 0.1229507327079773, disc_loss: 0.0008067148737609386
+INFO:root:Epoch 55, Step 2500, loss: 0.13420012593269348, disc_loss: 0.0033640083856880665
+INFO:root:Generator loss: 0.08279076837075566, Discriminator loss: 0.00598856069570758
+INFO:root:
+=== Epoch 55 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3416,SSNR: 10.4228,CSIG: 4.6679,CBAK: 3.8636,COVL: 4.1038,STOI: 0.9565
+
+INFO:root:Epoch 56, Step 500, loss: 0.07375665009021759, disc_loss: 0.001138350460678339
+INFO:root:Epoch 56, Step 1000, loss: 0.13605210185050964, disc_loss: 0.0018974667182192206
+INFO:root:Epoch 56, Step 1500, loss: 0.13178575038909912, disc_loss: 0.00026748867821879685
+INFO:root:Epoch 56, Step 2000, loss: 0.11464634537696838, disc_loss: 0.0016623379196971655
+INFO:root:Epoch 56, Step 2500, loss: 0.09744185209274292, disc_loss: 0.02531471662223339
+INFO:root:Generator loss: 0.08245747520145282, Discriminator loss: 0.006328805489776412
+INFO:root:
+=== Epoch 56 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3584,SSNR: 10.5457,CSIG: 4.6774,CBAK: 3.8799,COVL: 4.1199,STOI: 0.9564
+
+INFO:root:Epoch 57, Step 500, loss: 0.10651955008506775, disc_loss: 0.0010271744104102254
+INFO:root:Epoch 57, Step 1000, loss: 0.08229939639568329, disc_loss: 0.0011552278883755207
+INFO:root:Epoch 57, Step 1500, loss: 0.10317125916481018, disc_loss: 0.0010298116831108928
+INFO:root:Epoch 57, Step 2000, loss: 0.1313144713640213, disc_loss: 0.001115167629905045
+INFO:root:Epoch 57, Step 2500, loss: 0.11217567324638367, disc_loss: 0.0029096826910972595
+INFO:root:Generator loss: 0.0834580440146541, Discriminator loss: 0.006176590247068993
+INFO:root:
+=== Epoch 57 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3527,SSNR: 10.4326,CSIG: 4.6699,CBAK: 3.8691,COVL: 4.1118,STOI: 0.9562
+
+INFO:root:Epoch 58, Step 500, loss: 0.17449873685836792, disc_loss: 0.0014938169624656439
+INFO:root:Epoch 58, Step 1000, loss: 0.11713001132011414, disc_loss: 0.00014023522089701146
+INFO:root:Epoch 58, Step 1500, loss: 0.10725575685501099, disc_loss: 0.0004700752906501293
+INFO:root:Epoch 58, Step 2000, loss: 0.08189459145069122, disc_loss: 0.0008716522715985775
+INFO:root:Epoch 58, Step 2500, loss: 0.11761114746332169, disc_loss: 0.0004507262783590704
+INFO:root:Generator loss: 0.08335936340747528, Discriminator loss: 0.006494295510589651
+INFO:root:
+=== Epoch 58 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3444,SSNR: 10.4475,CSIG: 4.6647,CBAK: 3.8657,COVL: 4.1030,STOI: 0.9562
+
+INFO:root:Epoch 59, Step 500, loss: 0.13678348064422607, disc_loss: 0.0007496999460272491
+INFO:root:Epoch 59, Step 1000, loss: 0.0650835633277893, disc_loss: 0.0008154469542205334
+INFO:root:Epoch 59, Step 1500, loss: 0.13772016763687134, disc_loss: 0.0009976370492950082
+INFO:root:Epoch 59, Step 2000, loss: 0.13190840184688568, disc_loss: 4.647142122848891e-05
+INFO:root:Epoch 59, Step 2500, loss: 0.11685272306203842, disc_loss: 0.0008714983123354614
+INFO:root:Generator loss: 0.0833479388644105, Discriminator loss: 0.005520843756704442
+INFO:root:
+=== Epoch 59 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 3.3431,SSNR: 10.4242,CSIG: 4.6657,CBAK: 3.8641,COVL: 4.1026,STOI: 0.9564
+
+Training finished.
