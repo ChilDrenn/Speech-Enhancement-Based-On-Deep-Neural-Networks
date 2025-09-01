@@ -1,0 +1,409 @@
+Starting training:
+without SE:
+Namespace(batch_size=4, cut_len=32000, data_dir='/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/CMGAN_src/Dataset', decay_epoch=12, epochs=20, init_lr=0.0005, log_interval=500, loss_weights=[0.1, 0.9, 0.2, 0.05, 0.01], save_model_dir='./saved_models_log/saved_models_20250801_Samplesets')
+['NVIDIA A100-SXM4-80GB']
+====================================================================================================
+Layer (type:depth-idx)                             Output Shape              Param #
+====================================================================================================
+TSCNet                                             [1, 1, 321, 201]          --
+├─DenseEncoder: 1-1                                [1, 64, 321, 101]         --
+│    └─Sequential: 2-1                             [1, 64, 321, 201]         --
+│    │    └─Conv2d: 3-1                            [1, 64, 321, 201]         256
+│    │    └─InstanceNorm2d: 3-2                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-3                             [1, 64, 321, 201]         64
+│    └─DilatedDenseNet: 2-2                        [1, 64, 321, 201]         --
+│    │    └─ConstantPad2d: 3-4                     [1, 64, 322, 203]         --
+│    │    └─Conv2d: 3-5                            [1, 64, 321, 201]         24,640
+│    │    └─InstanceNorm2d: 3-6                    [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-7                             [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-8                     [1, 128, 323, 203]        --
+│    │    └─Conv2d: 3-9                            [1, 64, 321, 201]         49,216
+│    │    └─InstanceNorm2d: 3-10                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-11                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-12                    [1, 192, 325, 203]        --
+│    │    └─Conv2d: 3-13                           [1, 64, 321, 201]         73,792
+│    │    └─InstanceNorm2d: 3-14                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-15                            [1, 64, 321, 201]         64
+│    │    └─ConstantPad2d: 3-16                    [1, 256, 329, 203]        --
+│    │    └─Conv2d: 3-17                           [1, 64, 321, 201]         98,368
+│    │    └─InstanceNorm2d: 3-18                   [1, 64, 321, 201]         128
+│    │    └─PReLU: 3-19                            [1, 64, 321, 201]         64
+│    └─Sequential: 2-3                             [1, 64, 321, 101]         --
+│    │    └─Conv2d: 3-20                           [1, 64, 321, 101]         12,352
+│    │    └─InstanceNorm2d: 3-21                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-22                            [1, 64, 321, 101]         64
+├─TSCB: 1-2                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-4                         [101, 321, 64]            --
+│    │    └─Scale: 3-23                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-24                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-25              [101, 321, 64]            29,376
+│    │    └─Scale: 3-26                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-27                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-5                         [321, 101, 64]            --
+│    │    └─Scale: 3-28                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-29                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-30              [321, 101, 64]            29,376
+│    │    └─Scale: 3-31                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-32                        [321, 101, 64]            128
+├─TSCB: 1-3                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-6                         [101, 321, 64]            --
+│    │    └─Scale: 3-33                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-34                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-35              [101, 321, 64]            29,376
+│    │    └─Scale: 3-36                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-37                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-7                         [321, 101, 64]            --
+│    │    └─Scale: 3-38                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-39                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-40              [321, 101, 64]            29,376
+│    │    └─Scale: 3-41                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-42                        [321, 101, 64]            128
+├─TSCB: 1-4                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-8                         [101, 321, 64]            --
+│    │    └─Scale: 3-43                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-44                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-45              [101, 321, 64]            29,376
+│    │    └─Scale: 3-46                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-47                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-9                         [321, 101, 64]            --
+│    │    └─Scale: 3-48                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-49                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-50              [321, 101, 64]            29,376
+│    │    └─Scale: 3-51                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-52                        [321, 101, 64]            128
+├─TSCB: 1-5                                        [1, 64, 321, 101]         --
+│    └─ConformerBlock: 2-10                        [101, 321, 64]            --
+│    │    └─Scale: 3-53                            [101, 321, 64]            33,216
+│    │    └─PreNorm: 3-54                          [101, 321, 64]            32,976
+│    │    └─ConformerConvModule: 3-55              [101, 321, 64]            29,376
+│    │    └─Scale: 3-56                            [101, 321, 64]            33,216
+│    │    └─LayerNorm: 3-57                        [101, 321, 64]            128
+│    └─ConformerBlock: 2-11                        [321, 101, 64]            --
+│    │    └─Scale: 3-58                            [321, 101, 64]            33,216
+│    │    └─PreNorm: 3-59                          [321, 101, 64]            32,976
+│    │    └─ConformerConvModule: 3-60              [321, 101, 64]            29,376
+│    │    └─Scale: 3-61                            [321, 101, 64]            33,216
+│    │    └─LayerNorm: 3-62                        [321, 101, 64]            128
+├─MaskDecoder: 1-6                                 [1, 1, 321, 201]          --
+│    └─DilatedDenseNet: 2-12                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-63                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-64                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-65                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-66                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-67                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-68                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-69                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-70                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-71                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-72                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-73                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-74                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-75                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-76                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-77                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-78                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-13                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-79                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-80                           [1, 128, 321, 101]        24,704
+│    └─Conv2d: 2-14                                [1, 1, 321, 201]          129
+│    └─InstanceNorm2d: 2-15                        [1, 1, 321, 201]          2
+│    └─PReLU: 2-16                                 [1, 1, 321, 201]          1
+│    └─Conv2d: 2-17                                [1, 1, 321, 201]          2
+│    └─PReLU: 2-18                                 [1, 201, 321]             201
+├─ComplexDecoder: 1-7                              [1, 2, 321, 201]          --
+│    └─DilatedDenseNet: 2-19                       [1, 64, 321, 101]         --
+│    │    └─ConstantPad2d: 3-81                    [1, 64, 322, 103]         --
+│    │    └─Conv2d: 3-82                           [1, 64, 321, 101]         24,640
+│    │    └─InstanceNorm2d: 3-83                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-84                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-85                    [1, 128, 323, 103]        --
+│    │    └─Conv2d: 3-86                           [1, 64, 321, 101]         49,216
+│    │    └─InstanceNorm2d: 3-87                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-88                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-89                    [1, 192, 325, 103]        --
+│    │    └─Conv2d: 3-90                           [1, 64, 321, 101]         73,792
+│    │    └─InstanceNorm2d: 3-91                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-92                            [1, 64, 321, 101]         64
+│    │    └─ConstantPad2d: 3-93                    [1, 256, 329, 103]        --
+│    │    └─Conv2d: 3-94                           [1, 64, 321, 101]         98,368
+│    │    └─InstanceNorm2d: 3-95                   [1, 64, 321, 101]         128
+│    │    └─PReLU: 3-96                            [1, 64, 321, 101]         64
+│    └─SPConvTranspose2d: 2-20                     [1, 64, 321, 202]         --
+│    │    └─ConstantPad2d: 3-97                    [1, 64, 321, 103]         --
+│    │    └─Conv2d: 3-98                           [1, 128, 321, 101]        24,704
+│    └─InstanceNorm2d: 2-21                        [1, 64, 321, 202]         128
+│    └─PReLU: 2-22                                 [1, 64, 321, 202]         64
+│    └─Conv2d: 2-23                                [1, 2, 321, 201]          258
+====================================================================================================
+Total params: 1,834,833
+Trainable params: 1,834,833
+Non-trainable params: 0
+Total mult-adds (G): 41.56
+====================================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 4856.40
+Params size (MB): 7.34
+Estimated Total Size (MB): 4864.25
+====================================================================================================
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+Discriminator                            [1, 1]                    --
+├─Sequential: 1-1                        [1, 1]                    --
+│    └─Conv2d: 2-1                       [1, 16, 100, 160]         512
+│    └─InstanceNorm2d: 2-2               [1, 16, 100, 160]         32
+│    └─PReLU: 2-3                        [1, 16, 100, 160]         16
+│    └─Conv2d: 2-4                       [1, 32, 50, 80]           8,192
+│    └─InstanceNorm2d: 2-5               [1, 32, 50, 80]           64
+│    └─PReLU: 2-6                        [1, 32, 50, 80]           32
+│    └─Conv2d: 2-7                       [1, 64, 25, 40]           32,768
+│    └─InstanceNorm2d: 2-8               [1, 64, 25, 40]           128
+│    └─PReLU: 2-9                        [1, 64, 25, 40]           64
+│    └─Conv2d: 2-10                      [1, 128, 12, 20]          131,072
+│    └─InstanceNorm2d: 2-11              [1, 128, 12, 20]          256
+│    └─PReLU: 2-12                       [1, 128, 12, 20]          128
+│    └─AdaptiveMaxPool2d: 2-13           [1, 128, 1, 1]            --
+│    └─Flatten: 2-14                     [1, 128]                  --
+│    └─Linear: 2-15                      [1, 64]                   8,256
+│    └─Dropout: 2-16                     [1, 64]                   --
+│    └─PReLU: 2-17                       [1, 64]                   64
+│    └─Linear: 2-18                      [1, 1]                    65
+│    └─LearnableSigmoid: 2-19            [1, 1]                    1
+==========================================================================================
+Total params: 181,650
+Trainable params: 181,650
+Non-trainable params: 0
+Total mult-adds (M): 19.67
+==========================================================================================
+Input size (MB): 0.52
+Forward/backward pass size (MB): 11.49
+Params size (MB): 0.73
+Estimated Total Size (MB): 12.73
+==========================================================================================
+/mnt/iusers01/msc-stu/hum-msc-data-sci-2024-2025/t74061zq/erp/CMGAN_src/data/dataloader.py:52: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. With dispatcher enabled, this function is no-op. You can remove the function call.
+  torchaudio.set_audio_backend("sox_io")         # in linux
+train.py:226: UserWarning: Using a target size (torch.Size([4])) that is different to the input size (torch.Size([1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  gen_loss_GAN = F.mse_loss(predict_fake_metric.flatten(), one_labels.float())
+train.py:242: UserWarning: Using a target size (torch.Size([4])) that is different to the input size (torch.Size([1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  discrim_loss_metric = F.mse_loss(predict_max_metric.flatten(), one_labels) + \
+INFO:root:Generator loss: 0.23326109775475093, Discriminator loss: 0.2368218590106283
+INFO:root:
+=== Epoch 0 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.1038
+CSIG: 3.5744
+CBAK: 2.8244
+COVL: 2.8630
+SSNR: 4.3803
+STOI: 0.9059
+
+INFO:root:Generator loss: 0.18564320462090628, Discriminator loss: 0.2264589880193983
+INFO:root:
+=== Epoch 1 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.3422
+CSIG: 3.7548
+CBAK: 3.0964
+COVL: 3.0770
+SSNR: 6.7186
+STOI: 0.9242
+
+INFO:root:Generator loss: 0.16340029558965138, Discriminator loss: 0.16844238660165242
+INFO:root:
+=== Epoch 2 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.4371
+CSIG: 3.8044
+CBAK: 3.1847
+COVL: 3.1528
+SSNR: 7.4090
+STOI: 0.9269
+
+INFO:root:Generator loss: 0.16266759697880065, Discriminator loss: 0.08848287165164948
+INFO:root:
+=== Epoch 3 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.4726
+CSIG: 3.8520
+CBAK: 3.2686
+COVL: 3.1958
+SSNR: 8.4528
+STOI: 0.9298
+
+INFO:root:Generator loss: 0.1563574873975345, Discriminator loss: 0.0773696516241346
+INFO:root:
+=== Epoch 4 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.5237
+CSIG: 3.8911
+CBAK: 3.3009
+COVL: 3.2443
+SSNR: 8.6067
+STOI: 0.9300
+
+INFO:root:Generator loss: 0.15031811701399939, Discriminator loss: 0.11791752810989108
+INFO:root:
+=== Epoch 5 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.5274
+CSIG: 3.8981
+CBAK: 3.3026
+COVL: 3.2509
+SSNR: 8.5501
+STOI: 0.9311
+
+INFO:root:Generator loss: 0.15246945193835668, Discriminator loss: 0.13344363016741617
+INFO:root:
+=== Epoch 6 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.5690
+CSIG: 3.9163
+CBAK: 3.3527
+COVL: 3.2807
+SSNR: 9.0705
+STOI: 0.9318
+
+INFO:root:Generator loss: 0.15147910905735834, Discriminator loss: 0.07158479200942176
+INFO:root:
+=== Epoch 7 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.5661
+CSIG: 3.8883
+CBAK: 3.2419
+COVL: 3.2608
+SSNR: 7.3164
+STOI: 0.9293
+
+INFO:root:Generator loss: 0.1422704713685172, Discriminator loss: 0.044635486389909475
+INFO:root:
+=== Epoch 8 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.5698
+CSIG: 3.9083
+CBAK: 3.3571
+COVL: 3.2822
+SSNR: 8.9633
+STOI: 0.9325
+
+INFO:root:Generator loss: 0.14593903401068278, Discriminator loss: 0.01970965588199241
+INFO:root:
+=== Epoch 9 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6213
+CSIG: 3.8562
+CBAK: 3.3948
+COVL: 3.2791
+SSNR: 9.2058
+STOI: 0.9327
+
+INFO:root:Generator loss: 0.14568699577025004, Discriminator loss: 0.009905378866408552
+INFO:root:
+=== Epoch 10 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.5757
+CSIG: 3.9356
+CBAK: 3.3376
+COVL: 3.2996
+SSNR: 8.5882
+STOI: 0.9339
+
+INFO:root:Generator loss: 0.14303583651781082, Discriminator loss: 0.008865865679191691
+INFO:root:
+=== Epoch 11 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6336
+CSIG: 3.9435
+CBAK: 3.3912
+COVL: 3.3377
+SSNR: 8.8660
+STOI: 0.9324
+
+INFO:root:Generator loss: 0.1365332997270993, Discriminator loss: 0.0182031693735293
+INFO:root:
+=== Epoch 12 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6122
+CSIG: 3.9793
+CBAK: 3.3996
+COVL: 3.3423
+SSNR: 9.2999
+STOI: 0.9347
+
+INFO:root:Generator loss: 0.13531388342380524, Discriminator loss: 0.0118133473193406
+INFO:root:
+=== Epoch 13 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6496
+CSIG: 3.9465
+CBAK: 3.4235
+COVL: 3.3462
+SSNR: 9.2781
+STOI: 0.9322
+
+INFO:root:Generator loss: 0.13131629675626755, Discriminator loss: 0.013422702139775668
+INFO:root:
+=== Epoch 14 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6098
+CSIG: 3.9834
+CBAK: 3.4150
+COVL: 3.3448
+SSNR: 9.5095
+STOI: 0.9346
+
+INFO:root:Generator loss: 0.13435095761503493, Discriminator loss: 0.00773242801161749
+INFO:root:
+=== Epoch 15 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6237
+CSIG: 3.9417
+CBAK: 3.4484
+COVL: 3.3331
+SSNR: 9.8480
+STOI: 0.9332
+
+INFO:root:Generator loss: 0.12833510019949504, Discriminator loss: 0.012743631211508597
+INFO:root:
+=== Epoch 16 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.5903
+CSIG: 3.9378
+CBAK: 3.4387
+COVL: 3.3119
+SSNR: 9.9416
+STOI: 0.9342
+
+INFO:root:Generator loss: 0.12987120236669267, Discriminator loss: 0.01087925915739366
+INFO:root:
+=== Epoch 17 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6436
+CSIG: 3.9795
+CBAK: 3.4637
+COVL: 3.3614
+SSNR: 9.9904
+STOI: 0.9349
+
+INFO:root:Generator loss: 0.12592917574303492, Discriminator loss: 0.00956922140903771
+INFO:root:
+=== Epoch 18 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6003
+CSIG: 3.9710
+CBAK: 3.4517
+COVL: 3.3340
+SSNR: 10.1145
+STOI: 0.9353
+
+INFO:root:Generator loss: 0.12398681470326015, Discriminator loss: 0.01024304486678115
+INFO:root:
+=== Epoch 19 evaluation ===
+INFO:root:=== Evaluation metrics ===
+PESQ: 2.6156
+CSIG: 3.9593
+CBAK: 3.4672
+COVL: 3.3388
+SSNR: 10.2084
+STOI: 0.9352
+
+Training finished.
