@@ -1,0 +1,11 @@
+python train.py \
+  --epochs 50 \
+  --batch_size 4 \
+  --log_interval 500 \
+  --decay_epoch 12 \
+  --init_lr 0.0005 \
+  --cut_len 32000 \
+  --loss_weights 0.3 0.7 1 0.01  \
+  --data_dir "path for your dataset" \
+  --save_model_dir "path for saving models" \
+  --attn1 "attention block: se/cbam/eca/simam"
